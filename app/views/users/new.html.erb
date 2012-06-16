@@ -1,22 +1,29 @@
-<% provide(:title, 'TaskDeck - User Signup') %>
+<% provide(:title, 'User Signup - TaskDeck') %>
+
+<h1>Sign up!</h1>
+<br />
+
+<div class="row">
+  <div class="span6">
+    
+    <%= form_for(@user) do |f| %>
+
+      <%= render 'shared/error_messages' %>
 
 
+      <%= f.label :name %>
+      <%= f.text_field :name %>
 
-<%= form_for(@user) do |f| %>
+      <%= f.label :email, "Email Address" %>
+      <%= f.text_field :email %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :content %><br />
-    <%= f.text_area :content %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirm Password" %> 
+      <%= f.password_field :password_confirmation %>
+      <br />
+      <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
