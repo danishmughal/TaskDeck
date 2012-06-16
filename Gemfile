@@ -1,7 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.1'
-gem 'bootstrap-sass', '2.0.0'
+
+gem 'bootstrap-sass', '2.0.3'
+gem 'annotate', '~> 2.4.1.beta'
+gem 'bcrypt-ruby', '3.0.1'
+
 
 
 # Bundle edge Rails instead:
