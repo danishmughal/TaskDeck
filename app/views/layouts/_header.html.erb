@@ -8,7 +8,9 @@
       <div class="btn-group pull-right">
 
       <% if signed_in? %>
+      <a button class="btn" href="/">Dashboard</button></a>
       <a button class="btn" href="/signout">Sign out</button></a>
+
       <% else %>
 		  <a button class="btn" href="/signin">Sign in</button></a>
       <% end %>
