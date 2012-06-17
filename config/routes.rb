@@ -1,8 +1,14 @@
 Taskdeck::Application.routes.draw do
 
   resources :users
-  root to: "static_pages#home"
-  match "/signup", to: "users#new"
+  resources :sessions, only: [:create, :new, :destroy] 
+
+  root to: 'static_pages#home'
+
+  match '/signup', to: 'users#new'
+  match '/signin', to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
