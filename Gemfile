@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails', '3.2.6'
 
 gem 'bootstrap-sass', '2.0.3'
 gem 'annotate', '~> 2.4.1.beta'
@@ -28,7 +28,7 @@ end
 
 group :production do 
   gem 'taps'
-  gem 'pg'
+  #gem 'pg'
 end
 
 
