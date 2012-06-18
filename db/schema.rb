@@ -14,7 +14,9 @@
 ActiveRecord::Schema.define(:version => 20120617023031) do
 
   create_table "organizations", :force => true do |t|
-    t.string   "name"
+    t.text     "full_name"
+    t.string   "username"
+    t.string   "password"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -22,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20120617023031) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
+    t.integer  "organization_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"

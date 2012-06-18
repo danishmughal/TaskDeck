@@ -1,0 +1,32 @@
+<% provide(:title, 'TaskDeck') %>
+
+<h1>Create new Company/Organization</h1>
+<br />
+<p>If you are the owner or a manager of your organization, then fill out the form below. Once you create this organization, you will be unable to leave it. 
+<br />
+Username must be unique. Username and password will be given to future users of your organization's TaskDeck to allow them to join it. </p>
+
+<div class="row">
+  <div class="span6">
+    
+    <%= form_for(@organization) do |f| %>
+
+      <%= render 'shared/error_messages_for_new_organization' %>
+
+
+      <%= f.label :full_name, "Full name of the organization/company" %>
+      <%= f.text_field :full_name %>
+<br />
+
+      <%= f.label :username, "A unique username" %>
+      <%= f.text_field :username %>
+<br />
+
+      <%= f.label :password, "Passcode" %>
+      <%= f.password_field :password %>
+<br />
+      <br />
+      <%= f.submit "Create", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

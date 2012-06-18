@@ -8,7 +8,7 @@
 <% if signed_in? %>
 
 
-
+<% if current_user.organization_id? %>
 
 <div class="tabbable"> <!-- Only required for left/right tabs -->
   <ul class="nav nav-tabs">
@@ -38,6 +38,22 @@
 </div>
 
 
+<% else %>
+Welcome to TaskDeck! It seems that you are currently not in any company, group, or organization! You must create one or join one in order to use TaskDeck.
+<br />
+<br />
+<div class="btn-group">
+
+<p>Would you would like to create a TaskDeck for your organization?
+  <a button class="btn btn-mini" href="/neworg">Create TaskDeck</button></a>
+</div>
+
+
+<p>If a TaskDeck already exists for your company/organization/group, enter the name and passcode of your organization in order to join it. 
+
+
+
+<% end %>
 
 
 
