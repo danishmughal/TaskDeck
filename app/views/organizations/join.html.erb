@@ -1,6 +1,8 @@
+<% if signed_in? && current_user.organization_id.nil? %>
 <% provide(:title, 'Join Organization - TaskDeck') %>
 
-<h1>Join! Form does not work yet</h1>
+<h1>Join an Organization</h1>
+<p>If a TaskDeck already exists for your organization, you may fill out the form below in order to become a member of it. Your administrator or a coworker already using TaskDeck can provide you with the username and passcode required to join.</p>
 <br />
 
 <div class="row">
@@ -20,3 +22,11 @@
     <% end %>
   </div>
 </div>
+
+
+<% else %>
+<% provide(:title, 'Error - TaskDeck') %>
+<script type="text/javascript">
+  window.location.href="/"  // put your correct path in a string here
+</script>
+<% end %>

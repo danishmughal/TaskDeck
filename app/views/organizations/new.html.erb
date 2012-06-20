@@ -1,4 +1,6 @@
+<% if signed_in? && current_user.organization_id.nil? %>
 <% provide(:title, 'TaskDeck') %>
+
 
 <h1>Create new Company/Organization</h1>
 <br />
@@ -30,3 +32,10 @@ Username must be unique. Username and password will be given to future users of 
     <% end %>
   </div>
 </div>
+
+<% else %>
+<% provide(:title, 'Error - TaskDeck') %>
+<script type="text/javascript">
+  window.location.href="/"  // put your correct path in a string here
+</script>
+<% end %>

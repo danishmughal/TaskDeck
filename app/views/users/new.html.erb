@@ -1,3 +1,11 @@
+<% if signed_in? %>
+<% provide(:title, 'Error - TaskDeck') %>
+<script type="text/javascript">
+  window.location.href="/"  // put your correct path in a string here
+</script>
+
+
+<% else %>
 <% provide(:title, 'User Signup - TaskDeck') %>
 
 <h1>Sign up!</h1>
@@ -27,3 +35,4 @@
     <% end %>
   </div>
 </div>
+<% end %>
