@@ -5,20 +5,39 @@
         TaskDeck
       </a>
       <nav>
-      <div class="btn-group pull-right">
+
+
 
       <% if signed_in? %>
+
+        <ul class="nav">
+          <li class="active">
+            <a><i class=" icon-globe icon-white"></i><%= " " + current_user.organization.full_name %></a>
+          </li>
+        </ul>
+
+      <div class="btn-group pull-right">
 
       <a button class="btn" href="/">        
         <i class="icon-home"></i>
           My TaskDeck
       </button></a>
       <a button class="btn" href="/signout">Sign out</button></a>
+      </div>
+
+        <ul class="nav pull-right">
+          <li>
+            <a href="/"><i class="icon-ok-sign icon-white"></i><%= " " + current_user.name %></a>
+          </li>
+        </ul>
 
       <% else %>
-		  <a button class="btn" href="/signin">Sign in</button></a>
+        <div class="btn-group pull-right">
+		      <a button class="btn" href="/signin">Sign in</button></a>
+        </div>
+
       <% end %>
-	  </div>
+
 
       </nav>
     </div>
