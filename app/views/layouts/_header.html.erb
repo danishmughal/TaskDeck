@@ -10,12 +10,13 @@
 
       <% if signed_in? %>
 
+      <% if !current_user.organization_id.nil? %>
         <ul class="nav">
           <li class="active">
             <a><i class=" icon-globe icon-white"></i><%= " " + current_user.organization.full_name %></a>
           </li>
         </ul>
-
+      <% end %>
       <div class="btn-group pull-right">
 
       <a button class="btn" href="/">        

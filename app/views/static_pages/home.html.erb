@@ -55,13 +55,20 @@
           </li>
           <li>
             <a href="#">
-            <i class="icon-wrench"></i>
+            <i class=" icon-cog"></i>
               Admin Panel
             </a>
           </li>
           <li>
             <a href="#">
-            <i class="icon-asterisk"></i>
+            <i class="icon-briefcase"></i>
+              <%= current_user.organization.full_name %>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+            <i class="icon-wrench"></i>
               Settings
             </a>
           </li>
@@ -70,6 +77,8 @@
       </section>
 
     </aside>
+
+
 
 
 
@@ -86,6 +95,8 @@
 
 
 </div>
+
+
 
 
 <% else %>

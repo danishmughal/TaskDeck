@@ -17,7 +17,7 @@ class Organization < ActiveRecord::Base
 	before_save { |organization| organization.username = username.downcase }
 
 
-	validates :full_name, presence: true, length: { minimum: 2 }
+	validates :full_name, presence: true, length: { maximum: 30 }
 	validates :password, presence: true, length: { minimum: 6 }
 	validates :username, presence: true, uniqueness: true
 
