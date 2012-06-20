@@ -13,7 +13,20 @@ class OrganizationsController < ApplicationController
 		else
 			render 'new'
 		end
+	end
 
+
+	def joinorg
+		username = params[:organization][:username]
+		password = params[:organization][:password]
+  		@orgs = Organization.find_by_username_and_password username, password
+  		if @orgs
+  			@joinedtrue = true
+  			current_user.update_attribute(:organization_id, @orgs.id)
+   			flash.now[:success] = @orgs.full_name
+  		else
+  			flash[:error] = "Incorrect username/password combination"
+  		end
 	end
 
 end

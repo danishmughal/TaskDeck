@@ -1,0 +1,22 @@
+<% provide(:title, 'Join Organization - TaskDeck') %>
+
+<h1>Join! Form does not work yet</h1>
+<br />
+
+<div class="row">
+  <div class="span6">
+  
+    <%= form_for Organization.new, :url => "joinorg" do |f| %>
+
+
+      <%= f.label :username, "Company/Organization Username" %>
+      <%= f.text_field :username %>
+
+      <%= f.label :password,"Passcode" %>
+      <%= f.password_field :password %>
+
+      <br />
+      <%= f.submit "Join!", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

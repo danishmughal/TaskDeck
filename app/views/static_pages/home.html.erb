@@ -10,27 +10,45 @@
 
 <% if current_user.organization_id? %>
 
+<h1><%= current_user.organization.full_name %></h1>
+
+<br />
+
 <div class="tabbable"> <!-- Only required for left/right tabs -->
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab">TaskDeck</a></li>
-    <li><a href="#tab2" data-toggle="tab">Profile</a></li>
-    <li><a href="#tab3" data-toggle="tab">Settings</a></li>
+    <li><a href="#tab2" data-toggle="tab">Settings</a></li>
 
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-      <p>Main TaskDeck pane.</p>
+
+
+      <div class="span2">
+      <%= gravatar_for current_user, size: 150 %>
+      </div>
+
+      <div class="span4">
+        <h3><%= current_user.name %></h3> 
+
+        <strong>
+          <%= current_user.email %><br />
+          <%= current_user.organization.full_name %><br />
+        </strong>
+      </div>
+
+      <div class="span4 pull-right">
+        <a button class="btn btn-mini" href="#">
+        <i class=" icon-wrench"></i>
+        Edit Settings
+        </button></a>
+      </div>
+
     </div>
 
 
 
     <div class="tab-pane" id="tab2">
-      <p>User Profile</p>
-    </div>
-
-
-
-    <div class="tab-pane" id="tab3">
       <p>User Settings</p>
     </div>
 
@@ -42,17 +60,30 @@
 Welcome to TaskDeck! It seems that you are currently not in any company, group, or organization! You must create one or join one in order to use TaskDeck.
 <br />
 <br />
-<div class="btn-group">
 
+<div class="span4 offset1">
 <p>Would you would like to create a TaskDeck for your organization?
-  <a button class="btn btn-mini" href="/neworg">Create TaskDeck</button></a>
+  <br />
+  <br />
+  <br />
+  <a button class="btn btn-large" href="/neworg">Create TaskDeck</button></a>
+</p>
+</div>
+
+<div class="span4 offset1">
+<p>If a TaskDeck already exists for your company/organization/group, enter the name and passcode of your organization in order to join it. 
+  <br />
+  <br />
+  <a button class="btn btn-large" href="/join">Join Organization</button></a>
 </div>
 
 
-<p>If a TaskDeck already exists for your company/organization/group, enter the name and passcode of your organization in order to join it. 
-
-
-
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 <% end %>
 
 

@@ -1,0 +1,18 @@
+<% if @joinedtrue %>
+
+	You have successfully joined <%= @orgs.full_name %>
+	<br />
+	<br />
+  <a button class="btn btn-success" href="/">
+  	<i class="icon-arrow-left"></i>
+  	Back to DashBoard
+  </button></a>
+
+<% else %>
+
+	<script type="text/javascript">
+		window.location.href="/join"  // put your correct path in a string here
+	</script>
+	
+
+<% end %>
