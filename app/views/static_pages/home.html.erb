@@ -1,14 +1,10 @@
 <% provide(:title, 'TaskDeck') %>
 
-
-
-
-
-
 <% if signed_in? %>
 
 <% if current_user.organization_id? %>
 <br />
+<div class="row">
     <aside class="span4">
       <section>
         <%= gravatar_for current_user, size: 100 %>
@@ -18,26 +14,25 @@
           <%= current_user.organization.full_name %><br />
         </strong>
       </section>
-<br />
-<br />
+      <br />
+      <br />
       <section>
-<div class="stats">
-  <a href="#">
-    <strong id="tasksassigned" class="stat">
-      25
-    </strong>
-    Tasks Currently Assigned
-  </a>
-  <a href="#">
-    <strong id="taskscompleted" class="stat">
-      16
-    </strong>
-    Tasks Completed
-  </a>
-</div>
+        <div class="stats">
+          <a href="#">
+            <strong id="tasksassigned" class="stat">
+              25
+            </strong>
+            Tasks Currently Assigned
+          </a>
+          <a href="#">
+            <strong id="taskscompleted" class="stat">
+              16
+            </strong>
+            Tasks Completed
+          </a>
+        </div>
       </section>
       <section>
-        <div>
         <ul class="nav nav-list">
           <li class="nav-header">
           </li>
@@ -73,31 +68,16 @@
             </a>
           </li>
         </ul>
-        </div>
       </section>
-
     </aside>
 
 
-
-
-
-<!--
-      <div class="span4 pull-right">
-        <a button class="btn btn-mini" href="#">
-        <i class=" icon-wrench"></i>
-        Edit Settings
-        </button></a>
-      </div>
--->
-
-
+    <div class="span8">
+      Main Body.
+    </div>
 
 
 </div>
-
-
-
 
 <% else %>
 Welcome to TaskDeck! It seems that you are currently not in any company, group, or organization! You must create one or join one in order to use TaskDeck.
