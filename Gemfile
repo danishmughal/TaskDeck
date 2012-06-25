@@ -28,7 +28,7 @@ end
 
 group :production do 
   gem 'taps'
-  #gem 'pg'
+  gem 'pg'
 end
 
 
