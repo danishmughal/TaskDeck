@@ -1,0 +1,53 @@
+<% provide(:title, 'Team Panel - TaskDeck') %>
+<% @active = 2 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+
+<br />
+
+<div class="row">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+
+    	<% if current_user.team_id.nil? %>
+
+    		<h4>Create New Team</h4>
+    		<p>Fill out the form below to create your team. You will be able to add members through the Team Panel once you have created it. You will be assigned the role of Team Leader and you cannot change that until you assign another team member that role.</p>
+
+			<%= form_for(@team) do |f| %>
+			    <%= render 'shared/error_messages_for_new_team' %>
+			    <%= f.label :name, "Team Name:" %>
+			    <%= f.text_field :name %>
+			    <br />
+			    <%= f.submit "Create Team", class: "btn" %>
+			<% end %>
+		<% else %>
+
+		<% end %>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+<%= render 'shared/no_organization'%>
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

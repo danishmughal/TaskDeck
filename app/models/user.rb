@@ -5,17 +5,22 @@
 #  id              :integer         not null, primary key
 #  name            :string(255)
 #  email           :string(255)
+#  organization_id :integer
+#  admin           :boolean         default(FALSE)
+#  team_id         :integer
+#  team_leader     :boolean         default(FALSE)
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
 #  password_digest :string(255)
 #  remember_token  :string(255)
-#  organization_id :integer
+#  team_pending    :boolean
 #
 
 class User < ActiveRecord::Base
 	attr_accessible :name, :email, :password, :password_confirmation, :organization_id
 	has_secure_password
 	belongs_to :organization
+	belongs_to :team
 
 	before_save :create_remember_token
 	before_save { |user| user.email = email.downcase }

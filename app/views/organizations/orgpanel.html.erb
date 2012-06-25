@@ -1,0 +1,110 @@
+<% @orgname = current_user.organization.full_name %>
+<% provide(:title, @orgname + ' - TaskDeck') %>
+<% @active = 3 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+
+<br />
+
+<div class="row">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+    	
+    	<h2><%= @orgname %> - Organization Panel</h2>
+    	<br />
+    	<br />
+		
+
+		<h3>Members:</h3>
+			<table class="table">
+			  <thead>
+			    <tr>
+			      <th>Name</th>
+			      <th>Email</th>
+			      <th>Team</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+
+			  <% users = User.where(organization_id: current_user.organization_id) %>
+			  <% users.each do |u| %>
+			  <tr>   
+			  	<td><%= gravatar_for u, size: 25 %> <%= u.name %></td>
+			  	<td><%= u.email %></td>
+			  	<% if u.team_id? %>
+			  	<td><%= u.team.name %>
+			  		<% if u.team_pending %>
+			  		(Pending)
+			  		<% end %>
+			  	</td>
+			  	<% else %>
+			  	<td>...</td>
+			  	<% end %>
+			  </tr>
+			  <% end %>
+
+			  </tbody>
+			</table>
+
+
+
+		<br />
+		<br />
+		<br />
+
+		<h3>Teams:</h3>
+			<table class="table">
+			  <thead>
+			    <tr>
+			      <th>Team Name</th>
+			      <th></th>
+			    </tr>
+			  </thead>
+			  <tbody>
+
+			  <% team = Team.where(organization_id: current_user.organization_id) %>
+			  <% team.each do |t| %>
+			  <tr>   
+			  	<td><%= t.name %></td>
+			  	<% if current_user.team_id.nil? %>
+			  	<% @tt = t %>
+				<td><button class="btn btn-mini"><%= link_to "Join", { controller: :users, action: "jointeam", :id => @tt.id },	:confirm => "Are you sure? You will not be able to join another team unless the team leader removes you from the team.", :method => :post %></button></td>
+
+			    <% else %>
+			    <td><button class="btn btn-mini disabled">Join</button></td>
+			    <% end %>
+
+			  </tr>
+			  <% end %>
+			  </tbody>
+			</table>
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+<%= render 'shared/no_organization'%>
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

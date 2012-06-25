@@ -3,7 +3,9 @@ Taskdeck::Application.routes.draw do
   resources :users
   resources :sessions, only: [:create, :new, :destroy] 
   resources :organizations 
-  
+  resources :teams
+
+
   root to: 'static_pages#home'
 
   match '/signup', to: 'users#new'
@@ -12,6 +14,13 @@ Taskdeck::Application.routes.draw do
   match '/neworg', to: 'organizations#new'
   match '/join', to: 'organizations#join'
   match '/joinorg', to: 'organizations#joinorg'
+  match '/teampanel', to: 'teams#teampanel'
+  match '/newteam', to: 'teams#new'
+  match '/orgpanel', to: 'organizations#orgpanel'
+  match '/jointeam', to: 'users#jointeam'
+  match '/confirmteam', to: 'users#confirmteam'
+  match '/denyteam', to: 'users#denyteam'
+  match '/removeuserteam', to: 'users#removeuserteam'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,148 @@
+<% provide(:title, 'Team Panel - TaskDeck') %>
+<% @active = 2 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+
+<br />
+
+<div class="row">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+    	<% if current_user.team_id.nil? %>
+			<div class="alert">
+			  <strong>You are currently not a member of a Team!</strong> 
+			  <br />
+			  <br />
+			  <p>It seems that you have not joined a team yet. You may join a team through your 
+			  	<a href="/orgpanel">Organization Panel</a>, or you may create your own team. If you create your own team, you will be assigned the role of Team Leader.</p>
+			  <br />
+			  <br />
+			  <center><a button class="btn btn-large" href="/newteam">Create Team</button></a>
+			  </center>
+			  <br />
+			</div>
+		<% end %>
+
+		<% if current_user.team_pending? %>
+		<h2><%= current_user.team.name %></h2>
+		<p>You have applied to join this team. You must wait until you are confirmed before you can use this panel.</p>
+		<% end %>
+
+		<% if current_user.team_id? && !current_user.team_pending? %>
+
+		<h2><%= current_user.team.name %></h2>
+
+			<% if current_user.team_leader? %>
+
+				<div class="tabbable"> 
+				  <ul class="nav nav-tabs">
+				    <li class="active"><a href="#tab1" data-toggle="tab">Main</a></li>
+				    <li><a href="#tab2" data-toggle="tab">Team Management</a></li>
+				  </ul>
+				  <div class="tab-content">
+				    <div class="tab-pane active" id="tab1">
+				      <p>
+				      	Main team page.
+				      </p>
+				    </div>
+				    <div class="tab-pane" id="tab2">
+				      <p>
+				      	This is the team management page. Here you may carry out administrative tasks related to your team, such as the addition and removal of members.
+
+				      	<% users = User.where(team_id: current_user.team_id, team_pending: true) %>
+				      	<% if !users.empty? %>
+							<h3>Pending Members:</h3> Users who have applied to join your team. You may confirm or deny them from your team.
+							<table class="table">
+							  <thead>
+							    <tr>
+							      <th>Name</th>
+							      <th>Email</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+
+							<% users.each do |u| %>
+							  <tr>   
+							  	<td><%= gravatar_for u, size: 25 %> <%= u.name %></td>
+							  	<td><%= u.email %></td>
+							  	<td><button class="btn btn-mini"><%= link_to "Confirm", { controller: :users, action: "confirmteam", :id => u.id },	:confirm => "Are you sure?", :method => :post %></button></td>
+							  	<td><button class="btn btn-danger btn-mini"><%= link_to "Deny", { controller: :users, action: "denyteam", :id => u.id },	:confirm => "Are you sure?", :method => :post %></button></td>
+							  </tr>
+							<% end %>
+
+							  </tbody>
+							</table>
+						<% end %>
+
+						<% members = User.where(team_id: current_user.team_id, team_pending: false) %>
+						<% if !members.empty? %>
+							<h3>Team Members:</h3> 
+							<table class="table">
+							  <thead>
+							    <tr>
+							      <th>Name</th>
+							      <th>Email</th>
+							      <th>Role</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+
+							<% members.each do |m| %>
+							  <tr>   
+							  	<td><%= gravatar_for m, size: 25 %> <%= m.name %></td>
+							  	<td><%= m.email %></td>
+							  	<% if m.team_leader? %>
+							  		<td>Leader</td>
+							  	<% else %>
+							  		<td>Member</td>
+							  	<% end %>
+							  	<td><button class="close"><%= link_to "X", { controller: :users, action: "removeuserteam", :id => m.id },	:confirm => "Are you sure you want to remove this team member from your team?", :method => :post %></button></td>
+							  </tr>
+							<% end %>
+
+							  </tbody>
+							</table>
+
+						<% end %>
+
+			<% end %>
+				      </p>
+				    </div>
+				  </div>
+				</div> <!--End of Tabbable Navigation -->
+
+
+		<% end %>
+
+
+
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+<%= render 'shared/no_organization'%>
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

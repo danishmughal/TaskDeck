@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
 		if user && user.authenticate(params[:session][:password])
 			sign_in user
 			redirect_to root_path
-			flash[:success] = "You have successfully signed in."
+			flash[:success] = "Welcome back to TaskDeck. You have X notifications."
 		else
 			flash.now[:error] = 'Invalid email/password combination. Please try again.'
 			render 'new'
@@ -17,7 +17,6 @@ class SessionsController < ApplicationController
 
 	def destroy
 		sign_out
-		flash[:success] = "You have signed out"
 		redirect_to root_path
 	end
 

@@ -1,4 +1,5 @@
 <% provide(:title, 'TaskDeck') %>
+<% @active = 1 %>
 
 <% if signed_in? %>
 
@@ -6,69 +7,7 @@
 <br />
 <div class="row">
     <aside class="span4">
-      <section>
-        <%= gravatar_for current_user, size: 100 %>
-        <h3><%= current_user.name %></h3> 
-        <strong>
-          <%= current_user.email %><br />
-          <%= current_user.organization.full_name %><br />
-        </strong>
-      </section>
-      <br />
-      <br />
-      <section>
-        <div class="stats">
-          <a href="#">
-            <strong id="tasksassigned" class="stat">
-              25
-            </strong>
-            Tasks Currently Assigned
-          </a>
-          <a href="#">
-            <strong id="taskscompleted" class="stat">
-              16
-            </strong>
-            Tasks Completed
-          </a>
-        </div>
-      </section>
-      <section>
-        <ul class="nav nav-list">
-          <li class="nav-header">
-          </li>
-          <li class="active">
-            <a href="/">
-            <i class="icon-home"></i>
-              TaskDeck
-            </a>
-          </li>
-          <li>
-            <a href="#">
-            <i class="icon-user"></i>
-              Team Panel
-            </a>
-          </li>
-          <li>
-            <a href="#">
-            <i class=" icon-cog"></i>
-              Admin Panel
-            </a>
-          </li>
-          <li>
-            <a href="#">
-            <i class="icon-briefcase"></i>
-              <%= current_user.organization.full_name %>
-            </a>
-          </li>
-
-          <li>
-            <a href="#">
-            <i class="icon-wrench"></i>
-              Settings
-            </a>
-          </li>
-        </ul>
-      </section>
+      <%= render 'shared/side_menu' %>
     </aside>
 
 
@@ -79,54 +18,17 @@
 
 </div>
 
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
 <% else %>
-Welcome to TaskDeck! It seems that you are currently not in any company, group, or organization! You must create one or join one in order to use TaskDeck.
-<br />
-<br />
-
-<div class="span4 offset1">
-<p>Would you would like to create a TaskDeck for your organization? If you are an administrator or manager of your organization, this should be the option for you. 
-  <br />
-  <br />
-  <br />
-  <a button class="btn btn-large" href="/neworg">Create TaskDeck</button></a>
-</p>
-</div>
-
-<div class="span4 offset1">
-<p>If a TaskDeck already exists for your company/organization/group, enter the name and passcode of your organization in order to join it. 
-  <br />
-  <br />
-    <br />
-  <br />
-
-  <a button class="btn btn-large" href="/join">Join Organization</button></a>
-</div>
-
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+<%= render 'shared/no_organization'%>
 <% end %>
 
 
 
 
 <% else %>
-
-
-
-<div class="hero-unit">
-  <h1>TaskDeck</h1>
-  <p>A simple and clean way to manage the people and teams of your small organization or company. No clutter, with a simple work-focused design.</p>
-  <p>
-    <a class="btn btn-primary btn-large" href="/signup">
-      Sign Up!
-    </a>
-  </p>
-</div>
-
+<%= render 'shared/not_signed_in' %>
 <% end %>

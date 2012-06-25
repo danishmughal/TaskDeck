@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120617023031) do
+ActiveRecord::Schema.define(:version => 20120621120316) do
 
   create_table "organizations", :force => true do |t|
     t.text     "full_name"
@@ -21,14 +21,25 @@ ActiveRecord::Schema.define(:version => 20120617023031) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "teams", :force => true do |t|
+    t.string   "name"
+    t.integer  "organization_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
     t.integer  "organization_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.boolean  "admin",           :default => false
+    t.integer  "team_id"
+    t.boolean  "team_leader",     :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "password_digest"
     t.string   "remember_token"
+    t.boolean  "team_pending"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

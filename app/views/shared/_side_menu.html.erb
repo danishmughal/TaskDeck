@@ -1,0 +1,97 @@
+      <section>
+        <%= gravatar_for current_user, size: 100 %>
+        <h3><%= current_user.name %></h3> 
+        <strong>
+          <%= current_user.email %><br />
+          <%= current_user.organization.full_name %><br />
+        </strong>
+      </section>
+      <br />
+      <br />
+      <section>
+        <div class="stats">
+          <a href="#">
+            <strong id="tasksassigned" class="stat">
+              25
+            </strong>
+            Tasks Currently Assigned
+          </a>
+          <a href="#">
+            <strong id="taskscompleted" class="stat">
+              16
+            </strong>
+            Tasks Completed
+          </a>
+        </div>
+      </section>
+
+
+
+      <section>
+        <ul class="nav nav-list">
+          <li class="nav-header">
+          </li>
+          <% if @active == 1 %>
+          <li class="active">
+          <% else %>
+          <li>
+          <% end %>
+            <a href="/">
+            <i class="icon-home"></i>
+              TaskDeck
+            </a>
+          </li>
+
+
+          <% if @active == 2 %>
+          <li class="active">
+          <% else %>
+          <li>
+          <% end %>
+            <a href="/teampanel">
+            <i class="icon-user"></i>
+              Team Panel
+            </a>
+          </li>
+
+
+
+          <% if @active == 3 %>
+          <li class="active">
+          <% else %>
+          <li>
+          <% end %>
+            <a href="/orgpanel">
+            <i class="icon-briefcase"></i>
+              <%= current_user.organization.full_name %>
+            </a>
+          </li>
+
+
+
+
+          <% if @active == 4 %>
+          <li class="active">
+          <% else %>
+          <li>
+          <% end %>
+            <a href="#">
+            <i class="icon-wrench"></i>
+              Settings
+            </a>
+          </li>
+
+          <% if current_user.admin %>
+          <% if @active == 5 %>
+          <li class="active">
+          <% else %>
+          <li>
+          <% end %>
+            <a href="#">
+            <i class=" icon-cog"></i>
+              Admin Panel
+            </a>
+          </li>
+          <% end %>
+        </ul>
+      </section>

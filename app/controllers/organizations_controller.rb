@@ -9,8 +9,9 @@ class OrganizationsController < ApplicationController
 			@organization = Organization.new(params[:organization])
 			if @organization.save
 				current_user.update_attribute(:organization_id, @organization.id)
+				current_user.update_attribute(:admin, true)
 				sign_in current_user
-				flash[:success] = "Organization successfully created"
+				flash[:success] = "Organization successfully created. Welcome to your TaskDeck."
 				redirect_to '/'
 			else
 				render 'new'
@@ -39,5 +40,11 @@ class OrganizationsController < ApplicationController
 	  		redirect_to '/'
 	  	end
 	end
+
+
+
+	def orgpanel
+	end
+
 
 end

@@ -1,25 +1,22 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: teams
 #
 #  id              :integer         not null, primary key
 #  name            :string(255)
-#  email           :string(255)
 #  organization_id :integer
-#  admin           :boolean         default(FALSE)
-#  team_id         :integer
-#  team_leader     :boolean         default(FALSE)
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
-#  password_digest :string(255)
-#  remember_token  :string(255)
-#  team_pending    :boolean
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-
-two:
-  name: MyString
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+#  column: value
