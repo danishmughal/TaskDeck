@@ -5,14 +5,14 @@
 
 <% if current_user.organization_id? %>
 <br />
-<div class="row">
+<div class="row-fluid">
     <aside class="span4">
       <%= render 'shared/side_menu' %>
     </aside>
 
 
     <div class="span8">
-      Main Body.
+      <%= render 'tasks/taskdeck' %>
     </div>
 
 

@@ -21,7 +21,21 @@ class TeamsController < ApplicationController
 			flash[:error] = "Failure"
 			render 'new'
 		end
+	end
 
+	def deleteteam
+		teamid = current_user.team_id
+		users = User.where(team_id: teamid)
+		users.each do |u|
+			u.update_attribute(:team_id, nil)
+			u.update_attribute(:team_pending, false)
+			u.update_attribute(:team_leader, false)
+			sign_in current_user
+		end
+		team = Team.find(teamid)
+		team.delete
+		flash[:success] = "Your team has been deleted."
+		redirect_to '/teampanel'
 	end
 
 end

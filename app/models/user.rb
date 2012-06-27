@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
 	has_secure_password
 	belongs_to :organization
 	belongs_to :team
+	has_many :tasks
 
 	before_save :create_remember_token
 	before_save { |user| user.email = email.downcase }

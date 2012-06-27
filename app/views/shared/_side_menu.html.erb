@@ -3,6 +3,9 @@
         <h3><%= current_user.name %></h3> 
         <strong>
           <%= current_user.email %><br />
+          <% if !current_user.team_id.nil? %>
+            <%= current_user.team.name %>
+          <% end %>
           <%= current_user.organization.full_name %><br />
         </strong>
       </section>

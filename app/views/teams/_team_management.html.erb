@@ -1,0 +1,61 @@
+				      	This is the team management page. Here you may carry out administrative tasks related to your team, such as the addition and removal of members.
+
+				      	<% users = User.where(team_id: current_user.team_id, team_pending: true) %>
+				      	<% if !users.empty? %>
+							<h3>Pending Members:</h3> Users who have applied to join your team. You may confirm or deny them from your team.
+							<table class="table">
+							  <thead>
+							    <tr>
+							      <th>Name</th>
+							      <th>Email</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+
+							<% users.each do |u| %>
+							  <tr>   
+							  	<td><%= gravatar_for u, size: 25 %> <%= u.name %></td>
+							  	<td><%= u.email %></td>
+							  	<td><button class="btn btn-mini"><%= link_to "Confirm", { controller: :users, action: "confirmteam", :id => u.id },	:confirm => "Are you sure?", :method => :post %></button></td>
+							  	<td><button class="btn btn-danger btn-mini"><%= link_to "Deny", { controller: :users, action: "denyteam", :id => u.id },	:confirm => "Are you sure?", :method => :post %></button></td>
+							  </tr>
+							<% end %>
+
+							  </tbody>
+							</table>
+						<% end %>
+
+						<% members = User.where(team_id: current_user.team_id, team_pending: false) %>
+						<% if !members.empty? %>
+							<h3>Team Members:</h3> 
+							<table class="table">
+							  <thead>
+							    <tr>
+							      <th>Name</th>
+							      <th>Email</th>
+							      <th>Role</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+
+							<% members.each do |m| %>
+							  <tr>   
+							  	<td><%= gravatar_for m, size: 25 %> <%= m.name %></td>
+							  	<td><%= m.email %></td>
+							  	<% if m.team_leader? %>
+							  		<td>Leader</td>
+							  	<% else %>
+							  		<td>Member</td>
+							  	<% end %>
+							  	<% if !m.team_leader? %>
+							  	<td><button class="close"><%= link_to "X", { controller: :users, action: "removeuserteam", :id => m.id },	:confirm => "Are you sure you want to remove this team member from your team?", :method => :post %></button></td>
+							  	<% end %>
+							  </tr>
+							<% end %>
+
+							  </tbody>
+							</table>
+
+						<% end %>
+
+						<button class="btn btn-danger"><%= link_to "Delete Team", { controller: :teams, action: "deleteteam", :id => "delete" },	:confirm => "Are you sure? All information about current tasks will be permanently lost, and every member will be removed. Continue?", :method => :post %></button>

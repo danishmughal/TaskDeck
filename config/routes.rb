@@ -4,7 +4,7 @@ Taskdeck::Application.routes.draw do
   resources :sessions, only: [:create, :new, :destroy] 
   resources :organizations 
   resources :teams
-
+  resources :tasks
 
   root to: 'static_pages#home'
 
@@ -21,6 +21,8 @@ Taskdeck::Application.routes.draw do
   match '/confirmteam', to: 'users#confirmteam'
   match '/denyteam', to: 'users#denyteam'
   match '/removeuserteam', to: 'users#removeuserteam'
+  match '/deleteteam', to: 'teams#deleteteam'
+  match '/newtask', to: 'tasks#new'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

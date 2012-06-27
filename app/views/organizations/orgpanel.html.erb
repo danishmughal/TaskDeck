@@ -7,7 +7,7 @@
 
 <br />
 
-<div class="row">
+<div class="row-fluid">
     <aside class="span4">
       <%= render 'shared/side_menu' %>
     </aside>
@@ -57,6 +57,8 @@
 		<br />
 		<br />
 
+		<% team = Team.where(organization_id: current_user.organization_id) %>
+		<% if !team.empty? %>
 		<h3>Teams:</h3>
 			<table class="table">
 			  <thead>
@@ -67,7 +69,6 @@
 			  </thead>
 			  <tbody>
 
-			  <% team = Team.where(organization_id: current_user.organization_id) %>
 			  <% team.each do |t| %>
 			  <tr>   
 			  	<td><%= t.name %></td>
@@ -83,7 +84,7 @@
 			  <% end %>
 			  </tbody>
 			</table>
-
+		<% end %>
 
 
 

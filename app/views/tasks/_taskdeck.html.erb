@@ -1,0 +1,39 @@
+<h3>Your TaskDeck</h3>
+<br />
+
+<p><a button class="btn" href="/newtask">Create New Task</button></a></p>
+<br />
+<br />
+
+<% tasks = Task.where(user_id: current_user.id) %>
+
+<p>Active Tasks:</p>
+<% if tasks.empty? %>
+No active tasks currently.
+
+<% else %>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Description</th>
+      <th>Completion</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tasks.each do |t| %>
+    <tr>
+      <td><%= t.name %></td>
+      <td><%= t.description %></td>
+      <td>
+        <center><%= t.percent_complete.to_s() + "%" %><br />
+        <button class="btn btn-mini">Update</button><center>
+      </td>
+      <td><button class="btn btn-success"><i class=" icon-ok"></i></button></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<% end %>
