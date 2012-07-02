@@ -4,7 +4,7 @@
         <strong>
           <%= current_user.email %><br />
           <% if !current_user.team_id.nil? %>
-            <%= current_user.team.name %>
+            <%= current_user.team.name %><br />
           <% end %>
           <%= current_user.organization.full_name %><br />
         </strong>

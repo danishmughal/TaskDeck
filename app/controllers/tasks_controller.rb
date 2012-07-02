@@ -21,4 +21,18 @@ class TasksController < ApplicationController
 		end
 	end
 
+	def approvetask
+		task = Task.find(params[:id])
+		task.update_attribute(:approved, true)
+		redirect_to '/member_tasks'		
+	end
+
+
+	def rejecttask
+		task = Task.find(params[:id])
+		task.destroy
+		redirect_to '/member_tasks'
+	end
+
+
 end

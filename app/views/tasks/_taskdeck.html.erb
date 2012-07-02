@@ -5,9 +5,9 @@
 <br />
 <br />
 
-<% tasks = Task.where(user_id: current_user.id) %>
+<% tasks = Task.where(user_id: current_user.id, approved: true) %>
 
-<p>Active Tasks:</p>
+<h3>Active Tasks:</h3>
 <% if tasks.empty? %>
 No active tasks currently.
 
@@ -17,7 +17,6 @@ No active tasks currently.
     <tr>
       <th>Task</th>
       <th>Description</th>
-      <th>Completion</th>
       <th></th>
     </tr>
   </thead>
@@ -25,12 +24,59 @@ No active tasks currently.
     <% tasks.each do |t| %>
     <tr>
       <td><%= t.name %></td>
-      <td><%= t.description %></td>
       <td>
-        <center><%= t.percent_complete.to_s() + "%" %><br />
-        <button class="btn btn-mini">Update</button><center>
+
+          <% if t.percent_complete < 25 %> 
+            <div class="progress progress-danger progress-striped" >
+          <% elsif t.percent_complete < 50 %>
+            <div class="progress progress-warning progress-striped" >
+          <% elsif t.percent_complete < 100 %>
+            <div class="progress progress-striped" >
+          <% end %>
+
+            <div class="bar"
+                 style=<%= "width:#{t.percent_complete}%;" %> >
+            </div>
+          </div>          
+        <%= t.description %>
       </td>
-      <td><button class="btn btn-success"><i class=" icon-ok"></i></button></td>
+      <td>
+        <center>
+        <button class="btn btn-success"><i class=" icon-ok"></i></button>
+        <br /><br />
+        <button class="btn btn-mini align-bottom">Update</button>
+        <center>
+</td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<% end %>
+
+<br />
+<br />
+<br />
+<% tasks = Task.where(user_id: current_user.id, approved: false) %>
+
+<% if tasks.empty? %>
+
+<% else %>
+<h3>Tasks to be Approved: </h3>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Description</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tasks.each do |t| %>
+    <tr>
+      <td><%= t.name %></td>
+      <td><%= t.description %></td>
+      <td><%= t.created_at %></td>
       <% end %>
     </tr>
   </tbody>

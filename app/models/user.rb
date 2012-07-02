@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
 	belongs_to :organization
 	belongs_to :team
 	has_many :tasks
+	accepts_nested_attributes_for :tasks
+
 
 	before_save :create_remember_token
 	before_save { |user| user.email = email.downcase }

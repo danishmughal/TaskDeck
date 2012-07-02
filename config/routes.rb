@@ -23,6 +23,10 @@ Taskdeck::Application.routes.draw do
   match '/removeuserteam', to: 'users#removeuserteam'
   match '/deleteteam', to: 'teams#deleteteam'
   match '/newtask', to: 'tasks#new'
+  match '/team_management', to: 'teams#team_management'
+  match '/member_tasks', to: 'teams#member_tasks'
+  match '/approvetask', to: 'tasks#approvetask'
+  match '/rejecttask', to: 'tasks#rejecttask'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
