@@ -4,7 +4,6 @@ class TasksController < ApplicationController
 		@task = Task.new
 	end
 
-
 	def create
 		name = params[:task][:name]
 		desc = params[:task][:description]
@@ -27,12 +26,30 @@ class TasksController < ApplicationController
 		redirect_to '/member_tasks'		
 	end
 
-
 	def rejecttask
 		task = Task.find(params[:id])
 		task.destroy
 		redirect_to '/member_tasks'
 	end
+
+	def completetask
+		task = Task.find(params[:task][:id])
+		task.update_attribute(:percent_complete, 100)
+		redirect_to '/'
+	end
+
+	def updateform
+		@task = Task.find(params[:task][:id])
+	end
+
+
+	def updatetask
+		task = Task.find(params[:task][:id])
+		task.update_attribute(:percent_complete, params[:task][:percent_complete])
+		redirect_to '/'
+	end
+
+
 
 
 end

@@ -1,13 +1,33 @@
-<h3>Your TaskDeck</h3>
-<br />
+          <% @pendingtask = Task.count(:conditions => {:approved => false, :user_id => current_user.id}) %>
+          
 
-<p><a button class="btn" href="/newtask">Create New Task</button></a></p>
-<br />
-<br />
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="/">
+              TaskDeck
+              </a>
+            </li>
+              <li><a href="/finished">
+                Completed Tasks
+              </a>
+              </li>
+              <li><a href="/pending">
+                Pending Tasks
+                <% if @pendingtask != 0 %>
+                  <span class="badge">
+                  <%= @pendingtask %>
+                  </span></a>
+                <% end %>
+                </a>
+              </li>
+            </ul>
 
-<% tasks = Task.where(user_id: current_user.id, approved: true) %>
 
-<h3>Active Tasks:</h3>
+
+
+<% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: (0..99)) %>
+
+<h3>Active Tasks: <a button class="btn pull-right" href="/newtask">Create New Task</button></a></h3>
+<br />
 <% if tasks.empty? %>
 No active tasks currently.
 
@@ -32,21 +52,36 @@ No active tasks currently.
             <div class="progress progress-warning progress-striped" >
           <% elsif t.percent_complete < 100 %>
             <div class="progress progress-striped" >
+          <% elsif t.percent_complete = 100 %>
+            <div class="progress progress-striped progress-success" >
           <% end %>
 
             <div class="bar"
                  style=<%= "width:#{t.percent_complete}%;" %> >
             </div>
-          </div>          
+
+          </div>
         <%= t.description %>
       </td>
       <td>
         <center>
-        <button class="btn btn-success"><i class=" icon-ok"></i></button>
-        <br /><br />
-        <button class="btn btn-mini align-bottom">Update</button>
+
+        <% if t.percent_complete < 100 %>
+        <%= form_for :task, :url => url_for(:controller => 'tasks', 
+                            :action => 'completetask') do |f| %>
+        <%= f.hidden_field :id, :value => t.id %>                      
+        <%= f.submit "Complete", class: "btn btn-success btn-mini" %>
+        <% end %>
+        <% end %>
+        
+        <%= form_for :task, :url => url_for(:controller => 'tasks', 
+                            :action => 'updateform') do |f| %>
+        <%= f.hidden_field :id, :value => t.id %>                      
+        <%= f.submit "Update", class: "btn btn-mini" %>
+        <% end %>
+
         <center>
-</td>
+  </td>
       <% end %>
     </tr>
   </tbody>
@@ -57,29 +92,6 @@ No active tasks currently.
 <br />
 <br />
 <br />
-<% tasks = Task.where(user_id: current_user.id, approved: false) %>
 
-<% if tasks.empty? %>
 
-<% else %>
-<h3>Tasks to be Approved: </h3>
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Task</th>
-      <th>Description</th>
-      <th>Created</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% tasks.each do |t| %>
-    <tr>
-      <td><%= t.name %></td>
-      <td><%= t.description %></td>
-      <td><%= t.created_at %></td>
-      <% end %>
-    </tr>
-  </tbody>
-</table>
 
-<% end %>

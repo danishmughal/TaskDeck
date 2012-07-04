@@ -27,6 +27,11 @@ Taskdeck::Application.routes.draw do
   match '/member_tasks', to: 'teams#member_tasks'
   match '/approvetask', to: 'tasks#approvetask'
   match '/rejecttask', to: 'tasks#rejecttask'
+  match '/completetask', to: 'tasks#completetask'
+  match '/updatetask', to: 'tasks#updatetask'
+  match '/finished', to: 'tasks#finished'
+  match '/pending', to: 'tasks#pending'
+  match '/update', to: 'tasks#updateform'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

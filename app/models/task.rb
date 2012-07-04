@@ -16,6 +16,7 @@ class Task < ActiveRecord::Base
   attr_accessible :name, :description, :user_id, :approved, 
   				  :percent_complete
   belongs_to :user
+  has_many :task_notes
   
 
   validates :name, presence: true, length: { maximum: 50 }

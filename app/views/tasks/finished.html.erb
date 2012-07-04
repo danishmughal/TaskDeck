@@ -1,0 +1,97 @@
+<% provide(:title, 'Finished Tasks - TaskDeck') %>
+<% @active = 1 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+
+<br />
+
+<div class="row-fluid">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+          <% @pendingtask = Task.count(:conditions => {:approved => false, :user_id => current_user.id}) %>
+
+          <ul class="nav nav-tabs">
+            <li><a href="/">
+              TaskDeck
+              </a>
+            </li>
+              <li class="active"><a href="/finished">
+                Completed Tasks
+              </a>
+              </li>
+              <li><a href="/pending">
+                Pending Tasks
+                <% if @pendingtask != 0 %>
+                  <span class="badge">
+                  <%= @pendingtask %>
+                  </span></a>
+                <% end %>
+                </a>
+              </li>
+            </ul>
+
+    <% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: 100) %>
+
+    <% if tasks.empty? %>
+      No complete tasks.
+    <% else %>
+    <h3>Completed Tasks: </h3><br />
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Description</th>
+          <th>Last Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tasks.each do |t| %>
+        <tr>
+          <td><%= t.name %></td>
+          <td><%= t.description %></td>
+          <td><%= time_ago_in_words(t.updated_at) + " ago" %><br />
+            <%= "(" + t.updated_at.to_s + ")" %>
+          </td>
+
+          <td>
+            <%= form_for :task, :url => url_for(:controller => 'tasks', 
+                                :action => 'updatetask') do |f| %>
+            <%= f.hidden_field :id, :value => t.id %>                                            
+            <%= f.submit "Update", class: "btn btn-mini" %>
+            <% end %>
+          </td>
+
+        <% end %>
+        </tr>
+      </tbody>
+    </table>
+
+    <% end %>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+<%= render 'shared/no_organization'%>
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>
