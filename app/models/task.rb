@@ -17,7 +17,7 @@ class Task < ActiveRecord::Base
   				  :percent_complete
   belongs_to :user
   has_many :task_notes
-  
+  accepts_nested_attributes_for :task_notes
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :description, presence: true

@@ -1,10 +1,22 @@
+# == Schema Information
+#
+# Table name: task_notes
+#
+#  id               :integer         not null, primary key
+#  task_id          :integer
+#  description      :text
+#  percent_complete :integer
+#  created_at       :datetime        not null
+#  updated_at       :datetime        not null
+#
+
 class TaskNote < ActiveRecord::Base
-  attr_accessible :task_id, :description
+  attr_accessible :task_id, :description, :percent_complete
   belongs_to :task
 
 
   validates :task_id, presence: true
-  validates :description, presence: true, length: { minimum: 20 }
+  validates :description, presence: true, length: { minimum: 5 }
   validates :percent_complete, presence: true
 
 end

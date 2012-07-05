@@ -42,14 +42,24 @@ class TasksController < ApplicationController
 		@task = Task.find(params[:task][:id])
 	end
 
-
 	def updatetask
 		task = Task.find(params[:task][:id])
-		task.update_attribute(:percent_complete, params[:task][:percent_complete])
-		redirect_to '/'
+
+		if params[:task][:task_note][:description].length() < 5
+			flash[:error] = "ERROR: Your update description must be at least 5 characters long. Please try again."
+			redirect_to "/"
+		else
+			task.update_attribute(:percent_complete, params[:task][:percent_complete])
+			@tasknote = TaskNote.new(task_id: task.id, description: params[:task][:task_note][:description], 
+					  percent_complete: params[:task][:percent_complete])
+			@tasknote.save!
+			redirect_to '/'
+		end
+
 	end
 
-
-
+	def show
+		@task = Task.find(params[:id])
+	end
 
 end

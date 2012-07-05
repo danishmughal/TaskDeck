@@ -1,0 +1,12 @@
+<% if @tasknote.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      The form contains <%= pluralize(@tasknote.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% @tasknote.errors.full_messages.each do |msg| %>
+      <li> <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

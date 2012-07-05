@@ -5,6 +5,7 @@ Taskdeck::Application.routes.draw do
   resources :organizations 
   resources :teams
   resources :tasks
+  resources :task_notes
 
   root to: 'static_pages#home'
 
@@ -32,6 +33,7 @@ Taskdeck::Application.routes.draw do
   match '/finished', to: 'tasks#finished'
   match '/pending', to: 'tasks#pending'
   match '/update', to: 'tasks#updateform'
+  match '/newnote', to: 'task_notes#new_note'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

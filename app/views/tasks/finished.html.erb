@@ -35,7 +35,7 @@
               </li>
             </ul>
 
-    <% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: 100) %>
+    <% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: 100).order("updated_at DESC") %>
 
     <% if tasks.empty? %>
       No complete tasks.
@@ -52,15 +52,17 @@
       <tbody>
         <% tasks.each do |t| %>
         <tr>
-          <td><%= t.name %></td>
-          <td><%= t.description %></td>
+          <td><%= link_to t.name,t %></td>
+          <td><%= truncate t.description, length: 160 %>
+            <div class="pull-right"><%= link_to 'More ->', t %></div>
+          </td>
           <td><%= time_ago_in_words(t.updated_at) + " ago" %><br />
             <%= "(" + t.updated_at.to_s + ")" %>
           </td>
 
           <td>
             <%= form_for :task, :url => url_for(:controller => 'tasks', 
-                                :action => 'updatetask') do |f| %>
+                                :action => 'updateform') do |f| %>
             <%= f.hidden_field :id, :value => t.id %>                                            
             <%= f.submit "Update", class: "btn btn-mini" %>
             <% end %>

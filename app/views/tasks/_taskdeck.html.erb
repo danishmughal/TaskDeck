@@ -24,7 +24,7 @@
 
 
 
-<% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: (0..99)) %>
+<% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: (0..99)).order("updated_at DESC") %>
 
 <h3>Active Tasks: <a button class="btn pull-right" href="/newtask">Create New Task</button></a></h3>
 <br />
@@ -43,7 +43,7 @@ No active tasks currently.
   <tbody>
     <% tasks.each do |t| %>
     <tr>
-      <td><%= t.name %></td>
+      <td><%= link_to t.name,t %></td>
       <td>
 
           <% if t.percent_complete < 25 %> 
@@ -61,7 +61,8 @@ No active tasks currently.
             </div>
 
           </div>
-        <%= t.description %>
+        <%= truncate t.description, length: 160 %>
+        <div class="pull-right"><%= link_to 'More ->', t %></div>
       </td>
       <td>
         <center>
