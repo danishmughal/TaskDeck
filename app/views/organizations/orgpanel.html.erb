@@ -34,7 +34,7 @@
 			  <% users = User.where(organization_id: current_user.organization_id) %>
 			  <% users.each do |u| %>
 			  <tr>   
-			  	<td><%= gravatar_for u, size: 25 %> <%= u.name %></td>
+			  	<td><%= gravatar_for u, size: 25 %> <%= link_to u.name, u %></td>
 			  	<td><%= u.email %></td>
 			  	<% if u.team_id? %>
 			  	<td><%= u.team.name %>

@@ -1,0 +1,137 @@
+<% provide(:title, @user.name + "'s Profile - TaskDeck") %>
+<% @active = 1 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id == @user.organization_id %>
+
+<br />
+<button type="btn btn-success" value="<- Back" onclick="history.back(-1)">
+    <i class="icon-arrow-left"></i>
+    Back
+</button>
+<br />
+<br />
+<h2>User Profile</h3><br />
+
+<section>
+  <%= gravatar_for @user, size: 100 %>
+    <h3><%= @user.name %></h3> 
+      <strong>
+        <%= @user.email %><br />
+          <% if !@user.team_id.nil? %>
+            <%= @user.team.name %><br />
+          <% end %>
+          <%= @user.organization.full_name %><br />
+      </strong>
+</section>
+
+<br />
+<br />
+<br />
+<br />
+
+<% tasks = Task.where(user_id: @user.id, approved: true, percent_complete: (0..99)).order("updated_at DESC") %>
+
+<h3>Active Tasks:</h3>
+<br />
+<% if tasks.empty? %>
+No active tasks currently.
+
+<% else %>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Description</th>
+      <th>Last Updated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tasks.each do |t| %>
+    <tr>
+      <td><%= link_to t.name,t %></td>
+      <td>
+
+          <% if t.percent_complete < 25 %> 
+            <div class="progress progress-danger progress-striped" >
+          <% elsif t.percent_complete < 50 %>
+            <div class="progress progress-warning progress-striped" >
+          <% elsif t.percent_complete < 100 %>
+            <div class="progress progress-striped" >
+          <% elsif t.percent_complete = 100 %>
+            <div class="progress progress-striped progress-success" >
+          <% end %>
+
+            <div class="bar"
+                 style=<%= "width:#{t.percent_complete}%;" %> >
+            </div>
+
+          </div>
+        <%= truncate t.description, length: 160 %>
+        <div class="pull-right"><%= link_to 'More ->', t %></div>
+      </td>
+          <td><%= time_ago_in_words(t.updated_at) + " ago" %><br />
+            <%= "(" + t.updated_at.to_s + ")" %>
+          </td>
+
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<% end %>
+
+<br />
+<br />
+<br />
+
+
+    <% tasks = Task.where(user_id: @user.id, approved: true, percent_complete: 100).order("updated_at DESC") %>
+    <h3>Completed Tasks: </h3><br />
+    <% if tasks.empty? %>
+      No complete tasks.
+    <% else %>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Description</th>
+          <th>Completed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tasks.each do |t| %>
+        <tr>
+          <td><%= link_to t.name,t %></td>
+          <td><%= truncate t.description, length: 160 %>
+            <div class="pull-right"><%= link_to 'More ->', t %></div>
+          </td>
+          <td><%= time_ago_in_words(t.updated_at) + " ago" %><br />
+            <%= "(" + t.updated_at.to_s + ")" %>
+          </td>
+        <% end %>
+        </tr>
+      </tbody>
+    </table>
+
+    <% end %>
+<br />
+<br />
+<button type="btn btn-success" value="<- Back" onclick="history.back(-1)">
+    <i class="icon-arrow-left"></i>
+    Back
+</button>
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+  Error. You do not have permission to view this page.
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

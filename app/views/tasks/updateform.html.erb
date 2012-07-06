@@ -14,22 +14,23 @@
 
     <div class="span8">
 
-        <form class="well">
         <%= form_for :task, :url => url_for(:controller => 'tasks', 
                             :action => 'updatetask') do |f| %>
 
         <%= f.hidden_field :id, :value => @task.id %>
         
-        Progress: <%= f.text_field :percent_complete %>
+        Progress (1-100): <br />
+        <%= f.text_field :percent_complete %><%= " %" %>
         <br />                               
 
         <%= f.fields_for :task_note do |ff| %>
-            Description: <%= ff.text_area :description %>
+            Description: <br />
+            <%= ff.text_area :description %>
         <% end %>
+        <br />
         <br />
         <%= f.submit "Update", class: "btn btn-primary" %>
         <% end  %>
-        </form>
 
     </div>
 </div>

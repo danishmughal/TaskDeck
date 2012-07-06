@@ -14,16 +14,21 @@
 
     <div class="span8">
 
-      <h2><%= @task.name %>      <div class="pull-right">
-        <%= form_for :task, :url => url_for(:controller => 'tasks', 
-                            :action => 'updateform') do |f| %>
-        <%= f.hidden_field :id, :value => @task.id %>                      
-        <%= f.submit "Update", class: "btn btn-mini" %>
+      <h2><%= @task.name %> 
+        <% if current_user == @task.user %>
+          <div class="pull-right">
+          <%= form_for :task, :url => url_for(:controller => 'tasks', 
+                              :action => 'updateform') do |f| %>
+          <%= f.hidden_field :id, :value => @task.id %>                      
+          <%= f.submit "Update", class: "btn btn-mini" %>
+          <% end %>
+          </div>
         <% end %>
-      </div>
+
+
       </h2>
 
-
+      <strong>Owner: <%= link_to @task.user.name, @task.user %></strong><br />
       <strong>Status: <%= @task.percent_complete.to_s() + "% complete." %></strong>
 
 

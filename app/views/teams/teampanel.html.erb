@@ -64,11 +64,29 @@
 					<% end %>
 					  </ul>
 
+		<h3>Team Members:</h3>
+			<table class="table">
+			  <thead>
+			    <tr>
+			      <th>Name</th>
+			      <th>Email</th>
+			    </tr>
+			  </thead>
+			  <tbody>
 
-					      	Main team page.
+			  <% users = User.where(organization_id: current_user.organization_id, team_id: current_user.team_id) %>
+			  <% users.each do |u| %>
+			  <tr>   
+			  	<td><%= gravatar_for u, size: 30 %> <%= link_to u.name, u %></td>
+			  	<td><%= u.email %></td>
+			  </tr>
+			  <% end %>
+			  </tbody>
+			</table>
 
 
-				 	</div>
+
+	</div>
 		<% end %>
     </div>
 </div>
