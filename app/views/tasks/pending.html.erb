@@ -38,7 +38,7 @@
       <% tasks = Task.where(user_id: current_user.id, approved: false) %>
 
       <% if tasks.empty? %>
-
+        No tasks pending at this time.
       <% else %>
       <h3>Tasks to be Approved: </h3>
       <p>These are tasks that are yet to be approved by your team leader. Before you can begin work on these tasks and update them, your team leader needs to approve them. If you would like to work on a personal task that is not work related, make sure that you have specified it before creating it, and it will not need team leader approval.</p>

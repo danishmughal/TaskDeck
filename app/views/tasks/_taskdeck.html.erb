@@ -26,7 +26,13 @@
 
 <% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: (0..99)).order("updated_at DESC") %>
 
-<h3>Active Tasks: <a button class="btn pull-right" href="/newtask">Create New Task</button></a></h3>
+<h3>Active Tasks: 
+  <% if current_user.team_id? %>
+  <a button class="btn pull-right" href="/newtask">Create New Task</button></a></h3>
+  <% else %>
+  <a button class="btn pull-right" disabled="true">Create New Task</button></a></h3>
+  You must join or create a team in order to create tasks for yourself.
+  <% end %>
 <br />
 <% if tasks.empty? %>
 No active tasks currently.
