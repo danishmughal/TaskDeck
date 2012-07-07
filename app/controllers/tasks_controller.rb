@@ -12,6 +12,12 @@ class TasksController < ApplicationController
 						 percent_complete: 0)
 		if @task.save
 			sign_in current_user
+			@teamleader = User.find(:first, :conditions => ["team_id = ? and team_leader = ?", current_user.team_id, true])
+			@notification = Notification.new(user_id: @teamleader.id, 
+								 description: current_user.name + " has created a task '" + @task.name + "' which must be approved.",
+								 target: "/member_tasks",
+								 seen: false)
+			@notification.save!
 			flash[:success] = "Task created."
 			redirect_to '/'
 		else
@@ -23,11 +29,21 @@ class TasksController < ApplicationController
 	def approvetask
 		task = Task.find(params[:id])
 		task.update_attribute(:approved, true)
+		@notification = Notification.new(user_id: task.user.id, 
+								 description: "Your pending task " + task.name + " has been approved by your team leader.",
+								 target: "/tasks/" + task.id.to_s,
+								 seen: false)
+		@notification.save!
 		redirect_to '/member_tasks'		
 	end
 
 	def rejecttask
 		task = Task.find(params[:id])
+		@notification = Notification.new(user_id: task.user.id, 
+								 description: "Your pending task " + task.name + " has been REJECTED by your team leader.",
+								 target: "/",
+								 seen: false)
+		@notification.save!
 		task.destroy
 		redirect_to '/member_tasks'
 	end

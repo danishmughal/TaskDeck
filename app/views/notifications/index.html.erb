@@ -1,0 +1,50 @@
+<% provide(:title, 'Notifications - TaskDeck') %>
+<% @active = 1 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+
+<br />
+
+
+<% notifs = Notification.where(user_id: current_user.id).order("created_at DESC") %>
+<h2>Your Past Notifications:</h3>
+<br />
+<% if notifs.empty? %>
+None.
+<% else %>
+
+
+    <table class="table">
+      <thead>
+      </thead>
+      <tbody>
+        <tr>
+          <% notifs.each do |n| %>
+          <td><%= n.description %></td>
+          <td><%= time_ago_in_words(n.created_at) + " ago" %></td>
+
+        </tr>
+          <% end %>
+
+      </tbody>
+    </table>
+
+
+<% end %>
+
+<button type="btn btn-success" value="<- Back" onclick="history.back(-1)">
+    <i class="icon-arrow-left"></i>
+    Back
+</button>
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+  Error. You do not have permission to view this page.
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

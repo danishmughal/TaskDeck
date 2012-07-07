@@ -34,6 +34,9 @@ Taskdeck::Application.routes.draw do
   match '/pending', to: 'tasks#pending'
   match '/update', to: 'tasks#updateform'
   match '/newnote', to: 'task_notes#new_note'
+  match '/clearnotifs', to: 'notifications#clearnotifs'
+  match '/notifications', to: 'notifications#index'
+  match '/settings', to: 'users#edit'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

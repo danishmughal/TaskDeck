@@ -27,6 +27,57 @@
       </div>
 
         <ul class="nav pull-right">
+
+          <% notifs = Notification.where(user_id: current_user.id, seen: false).order("created_at DESC") %>
+
+          <ul class="nav">
+            <li class="dropdown">
+              <a href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown">
+                    Notifications
+                    <% if notifs.count > 0 %>
+                    <span class="label label-important"><%= notifs.count %></span>
+                    <% end  %>
+                    <b class="caret"></b>
+              </a>
+
+
+
+              <ul class="dropdown-menu">
+                <li class="divider"></li>
+                <% if notifs.empty? %>
+                <center>No unread notifications.<br /><br /></center>
+                <% end %>
+                <% notifs.each do |n| %>
+                <li><a href=<%= n.target %>><%= n.description %><br /><%= time_ago_in_words(n.created_at) + " ago" %></a></li>
+                <li class="divider"></li>
+                <% end %>
+                <li>
+                  <div class="pull-right">
+                    <%= form_for :notification, :url => url_for(:controller => 'notifications', 
+                                  :action => 'clearnotifs') do |f| %>
+                    <%= f.hidden_field :id, :value => current_user.id %>                                    
+                    <%= f.submit "Clear", class: "btn btn-mini" %>
+                    <% end %>
+                  </div>
+                  <center>
+                  <div class="pull-left">                  
+                    <%= form_for :notification, :url => url_for(:controller => 'notifications', 
+                                  :action => 'index') do |f| %>
+                    <%= f.hidden_field :id, :value => current_user.id %>                                 
+                    <%= f.submit "View All", class: "btn btn-mini" %>
+                    <% end %>
+                  </div>
+
+                  </center>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+
+
           <li>
             <a href="/"><i class="icon-ok-sign icon-white"></i><%= " " + current_user.name %></a>
           </li>
