@@ -13,8 +13,8 @@
 
 
     <div class="span8">
-      <%= form_for @user, :url => url_for(:controller => 'users', 
-                            :action => 'edit') do |f| %>
+    <h2>Settings</h2>  
+ 	  <%= form_for(@user) do |f| %>
 
       <%= f.label :name %>
       <%= f.text_field :name %>
@@ -22,10 +22,17 @@
       <%= f.label :email %>
       <%= f.text_field :email %>
 
-      <%= f.label :password %>
+      <br />Time Zone: <br />
+      <%= time_zone_select( :user, :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Pacific Time (US & Canada)")  %>
+
+      <br />
+      <br />
+      Confirm/Change your password: <p>Enter your current password below to save your changes. If you wish to change your password, enter your new password below and save.</p>
+
+      <%= f.label :password, "Password" %>
       <%= f.password_field :password %>
 
-      <%= f.label :password_confirmation, "Confirm Password" %>
+      <%= f.label :password_confirmation, "Confirm" %>
       <%= f.password_field :password_confirmation %>
       <br />
       <br />

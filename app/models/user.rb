@@ -17,7 +17,7 @@
 #
 
 class User < ActiveRecord::Base
-	attr_accessible :name, :email, :password, :password_confirmation, :organization_id
+	attr_accessible :name, :email, :password, :password_confirmation, :organization_id, :time_zone
 	has_secure_password
 	belongs_to :organization
 	belongs_to :team

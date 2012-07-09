@@ -29,6 +29,7 @@
       </h2>
 
       <strong>Owner: <%= link_to @task.user.name, @task.user %></strong><br />
+      <strong>Created: <%= time_ago_in_words(@task.created_at) + " ago."%></strong><%= "  (" + @task.created_at.to_s + ")" %><br />
       <strong>Status: <%= @task.percent_complete.to_s() + "% complete." %></strong>
 
 

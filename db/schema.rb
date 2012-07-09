@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120706112515) do
+ActiveRecord::Schema.define(:version => 20120707101908) do
 
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20120706112515) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "team_pending"
+    t.string   "time_zone"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
