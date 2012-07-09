@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(params[:user])
 		if @user.save
-			UserMailer.registration_confirmation(@user).deliver  
 			sign_in @user
 			flash[:success] = "Your account has been created. Welcome to TaskDeck!"
 			redirect_to '/'
