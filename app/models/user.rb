@@ -14,6 +14,7 @@
 #  password_digest :string(255)
 #  remember_token  :string(255)
 #  team_pending    :boolean
+#  time_zone       :string(255)
 #
 
 class User < ActiveRecord::Base

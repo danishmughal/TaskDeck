@@ -21,6 +21,7 @@ class UsersController < ApplicationController
 		if current_user.team_id.nil?
 			teamid = params[:id]
 			@teamleader = User.find(:first, :conditions => ["team_id = ? and team_leader = ?", teamid, true])
+			UserMailer.team_requested(current_user, @teamleader).deliver
 			@notification = Notification.new(user_id: @teamleader.id, 
 								 description: current_user.name + " has requested to join your team.",
 								 target: "/team_management",
@@ -40,6 +41,7 @@ class UsersController < ApplicationController
 
 	def confirmteam
 		user = User.find(params[:id])
+		UserMailer.send_team_confirmed(user)
 		@notification = Notification.new(user_id: user.id, 
 								 description: "You have been accepted into the team '" + current_user.team.name + "'' by " + current_user.name + ".",
 								 target: "/teampanel",

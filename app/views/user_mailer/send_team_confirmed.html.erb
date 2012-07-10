@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1><%= @user.name + " has been added to your team on TaskDeck."%></h1>
+
+
+<strong>Member Name:</strong><%= " " + @user.name %><br />
+<strong>Email:</strong><%= " " + @user.email %><br />
+<strong>Team Name:</strong><%= " " + @user.team.name %><br />
+
+<br />
+
+You may visit your Team's page <a href="taskdeck.heroku.com/teampanel">here.</a>
+<br />
+<br />
+<br />
+
+Brought to you by TaskDeck.
+  </body>
+</html>
