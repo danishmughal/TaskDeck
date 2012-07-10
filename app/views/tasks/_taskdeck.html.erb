@@ -23,7 +23,6 @@
 
 
 
-
 <% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: (0..99)).order("updated_at DESC") %>
 
 <h3>Active Tasks: 
