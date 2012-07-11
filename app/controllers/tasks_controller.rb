@@ -7,17 +7,27 @@ class TasksController < ApplicationController
 	def create
 		name = params[:task][:name]
 		desc = params[:task][:description]
-		@task = Task.new(name: name, description: desc, 
+		if current_user.team_leader?
+			@task = Task.new(name: name, description: desc, 
+						 user_id: current_user.id,
+						 percent_complete: 0,
+						 approved: true)
+		else
+			@task = Task.new(name: name, description: desc, 
 						 user_id: current_user.id,
 						 percent_complete: 0)
+
+		end
 		if @task.save
 			sign_in current_user
-			@teamleader = User.find(:first, :conditions => ["team_id = ? and team_leader = ?", current_user.team_id, true])
-			@notification = Notification.new(user_id: @teamleader.id, 
-								 description: current_user.name + " has created a task '" + @task.name + "' which must be approved.",
-								 target: "/member_tasks",
-								 seen: false)
-			@notification.save!
+			if !current_user.team_leader?
+				@teamleader = User.find(:first, :conditions => ["team_id = ? and team_leader = ?", current_user.team_id, true])
+				@notification = Notification.new(user_id: @teamleader.id, 
+									 description: current_user.name + " has created a task '" + @task.name + "' which must be approved.",
+									 target: "/member_tasks",
+									 seen: false)
+				@notification.save!
+			end
 			flash[:success] = "Task created."
 			redirect_to '/'
 		else
