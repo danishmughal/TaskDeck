@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1><%= "You have been assigned a new task on TaskDeck"%></h1>
+
+
+<strong>Task Name:</strong><%= " " + @task.name %><br />
+<strong>Task Description:</strong><%= " " + @task.description %><br />
+<strong>Link:</strong><a href=<%= "taskdeck.heroku.com/tasks/" + @task.id.to_s %>>Here</a><br />
+
+<br />
+
+You may visit your Team's page <a href="taskdeck.heroku.com/teampanel">here.</a>
+<br />
+<br />
+<br />
+
+Brought to you by TaskDeck.
+  </body>
+</html>

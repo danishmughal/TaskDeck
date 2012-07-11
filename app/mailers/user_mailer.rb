@@ -31,4 +31,11 @@ class UserMailer < ActionMailer::Base
   	mail(:to => recipient.email, :subject => user.name + " has joined your team on TaskDeck.")
   end
 
+
+  def task_assigned(user, task)
+    @user = user
+    @task = task
+    mail(:to => user.email, :subject => "You have been assigned a new task on TaskDeck.")
+  end
+
 end

@@ -1,0 +1,101 @@
+<% provide(:title, 'Assign - TaskDeck') %>
+<% @active = 1 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+<% if current_user.team_leader? %>
+
+<br />
+
+<div class="row-fluid">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+                <h2><%= current_user.team.name %></h2><br />
+
+                <ul class="nav nav-tabs">
+                    <li><a href="/teampanel">Main</a></li>
+
+                    <% if current_user.team_leader? %>
+                        <% @pendinguser = User.count(:conditions => {:team_pending => true, :team_id => current_user.team_id}) %>
+
+                        <% @pendingtask = 0 %>
+                        <% tasks = Task.where(approved: false) %>
+                        <% tasks.each do |t| %>
+                        <% if t.user.team_id == current_user.team_id %>
+                            <% @pendingtask = @pendingtask + 1 %>
+                        <% end %>
+                        <% end %>
+
+                        <li><a href="/team_management">
+                            Team Management 
+                            <% if @pendinguser != 0 %>
+                            <span class="badge badge-info">
+                            <%= @pendinguser %>
+                            </span></a>
+                            <% end %>
+                        </a>
+                        </li>
+                        
+                        <li><a href="/member_tasks">
+                            Member Tasks
+                            <% if @pendingtask != 0 %>
+                            <span class="badge badge-info">
+                            <%= @pendingtask %>
+                            </span></a>
+                            <% end %>
+                            </a>
+                        </li>
+
+                        <li class="active"><a href="/assigntask">
+                            Assign Tasks
+                        </a>
+                        </li>
+
+                      </ul>
+                    <% end %>
+
+    	<h3>Assign Tasks</h3><br />
+        		<%= form_for :task, :url => url_for(:controller => 'tasks', 
+                            :action => 'assigntask') do |f| %>
+
+
+                <% @teammembers = User.where(team_id: current_user.team_id, team_leader: false) %>
+                Team Member: <br />
+                <%= collection_select(:user, :id, @teammembers, :id, :name, options ={:prompt => "-Select a User"}, :class =>"user") %>
+
+            
+			    <%= f.label :name, "Task Name:" %>
+			    <%= f.text_field :name %>
+
+			    <%= f.label :description, "Description (As detailed as possible):" %>
+			    <%= f.text_area :description %>
+
+			    <br />
+			    <%= f.submit "Assign Task", class: "btn" %>
+			<% end %>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<% end %>
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+<%= render 'shared/no_organization'%>
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

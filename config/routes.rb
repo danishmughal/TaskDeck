@@ -37,6 +37,8 @@ Taskdeck::Application.routes.draw do
   match '/clearnotifs', to: 'notifications#clearnotifs'
   match '/notifications', to: 'notifications#index'
   match '/settings', to: 'users#edit'
+  match '/assigntask', to: 'tasks#assigntaskform'
+  match '/assigntask2', to: 'tasks#assigntask'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -78,4 +78,33 @@ class TasksController < ApplicationController
 		@task = Task.find(params[:id])
 	end
 
+
+	def assigntaskform
+	end
+
+	def assigntask
+		id = params[:user][:id]
+		name = params[:task][:name]
+		desc = params[:task][:description]
+		@task = Task.new(name: name, description: desc, 
+						 user_id: id,
+						 percent_complete: 0,
+						 approved: true)
+		if @task.save
+			sign_in current_user
+			@taskuser = User.find(id)
+			UserMailer.task_assigned(@taskuser, @task).deliver
+			@notification = Notification.new(user_id: @taskuser.id, 
+								 description: "You have been assigned a new task " + name + " by your Team Leader.",
+								 target: "/tasks/" + @task.id.to_s,
+								 seen: false)
+			@notification.save!
+			flash[:success] = "The task " + name + " has been assigned to " + @taskuser.name + "."
+			redirect_to '/assigntask'
+		else
+			flash[:error] = "Failure"
+			render 'new'
+		end
+	end
+
 end
