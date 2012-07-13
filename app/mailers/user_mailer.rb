@@ -38,4 +38,29 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "You have been assigned a new task on TaskDeck.")
   end
 
+=begin
+  def send_reminder_email(reminders)
+    reminders.each do |r|
+      r.user = @user
+      r.name = @reminder_name
+      r.description = @reminder_description
+      reminder_email(@user, @reminder_name, @reminder_description).deliver
+    end
+  end
+
+  def reminder_email(user, reminder_name, reminder_description)
+      @user = user
+      @reminder_name = reminder_name
+      @reminder_description = reminder_description
+      mail(:to => user.email, :subject => "Reminder for " + reminder_name)
+  end
+=end
+
+  def reminder_email(reminder)
+    @reminder = reminder
+    mail(:to => reminder.user.email, :subject => "Reminder for " + reminder.name)
+  end
+    
+  
+
 end

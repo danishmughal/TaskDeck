@@ -33,6 +33,11 @@
                 <% end %>
                 </a>
               </li>
+              <li class="pull-right"><a href="/reminders">
+                Reminders
+              </a>
+              </li>
+
             </ul>
 
       <% tasks = Task.where(user_id: current_user.id, approved: false) %>

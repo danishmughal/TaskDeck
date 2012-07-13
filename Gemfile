@@ -5,8 +5,10 @@ gem 'rails', '3.2.6'
 gem 'bootstrap-sass', '2.0.3'
 gem 'annotate', '~> 2.4.1.beta'
 gem 'bcrypt-ruby', '3.0.1'
+gem 'jquery_datepicker'
 
-
+gem 'delayed_job_active_record'
+gem "daemons"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

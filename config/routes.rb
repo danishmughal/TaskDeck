@@ -6,6 +6,7 @@ Taskdeck::Application.routes.draw do
   resources :teams
   resources :tasks
   resources :task_notes
+  resources :reminders
 
   root to: 'static_pages#home'
 

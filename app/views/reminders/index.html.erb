@@ -1,0 +1,157 @@
+<% provide(:title, 'Reminders - TaskDeck') %>
+<% @active = 1 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+
+<br />
+
+<div class="row-fluid">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+
+          <ul class="nav nav-tabs">
+            <li><a href="/">
+              TaskDeck
+              </a>
+            </li>
+              <li><a href="/finished">
+                Completed Tasks
+              </a>
+              </li>
+              <li><a href="/pending">
+                Pending Tasks
+                <% if @pendingtask != 0 %>
+                  <span class="badge">
+                  <%= @pendingtask %>
+                  </span></a>
+                <% end %>
+                </a>
+              </li>
+              <li class="pull-right active"><a href="/reminders">
+                Reminders
+              </a>
+              </li>
+            </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<% upcomingreminders = Reminder.where("user_id = ? and reminder_at > ?", current_user.id, Time.now).order("reminder_at ASC") %>
+
+<% if !upcomingreminders.empty? %>
+<h3>Upcoming Reminders: 
+  <a button class="btn pull-right" href="/reminders/new">Add a Reminder</button></a></h3>
+<br />
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% upcomingreminders.each do |r| %>
+    <tr>
+    	<td><%= r.name %></td>
+    	<td><%= r.description %></td>
+    	<td><%= r.reminder_at %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% else %>
+
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% reminders = Reminder.where("user_id = ? and reminder_at < ?", current_user.id, Time.now).order("reminder_at DESC") %>
+
+<% if !reminders.empty? %>
+<% if upcomingreminders.empty? %>
+<h3>Past Reminders: 
+  <a button class="btn pull-right" href="/reminders/new">Add a Reminder</button></a></h3>
+<br />
+<% else %>
+<h3>Past Reminders: </h3>
+
+<% end %>
+
+<br />
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% reminders.each do |r| %>
+    <tr>
+    	<td><%= r.name %></td>
+    	<td><%= r.description %></td>
+    	<td><%= r.reminder_at %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% else %>
+
+<% end %>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+<%= render 'shared/no_organization'%>
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

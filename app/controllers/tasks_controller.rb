@@ -103,7 +103,7 @@ class TasksController < ApplicationController
 		if @task.save
 			sign_in current_user
 			@taskuser = User.find(id)
-			UserMailer.task_assigned(@taskuser, @task).deliver
+			UserMailer.delay.task_assigned(@taskuser, @task)
 			@notification = Notification.new(user_id: @taskuser.id, 
 								 description: "You have been assigned a new task " + name + " by your Team Leader.",
 								 target: "/tasks/" + @task.id.to_s,

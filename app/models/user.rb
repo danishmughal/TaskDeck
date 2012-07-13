@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
 	belongs_to :organization
 	belongs_to :team
 	has_many :tasks
+	has_many :reminders
 	accepts_nested_attributes_for :tasks
 
 
