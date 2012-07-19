@@ -1,0 +1,99 @@
+<% provide(:title, 'Admin Panel - TaskDeck') %>
+<% @active = 5 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+<% if current_user.admin? %>
+<br />
+
+<div class="row-fluid">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+
+      <h2>Admin Panel</h2><br />
+
+      <div class="tabbable"> <!-- Only required for left/right tabs -->
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab1" data-toggle="tab">Preferences</a></li>
+          <li><a href="#tab2" data-toggle="tab">Change Password</a></li>
+
+        </ul>
+        <div class="tab-content">
+
+
+          <div class="tab-pane active" id="tab1">
+            <h3><p>Organization Preferences</p></h3>
+            <%= form_for :organization, :url => url_for(:controller => 'organizations', 
+                            :action => 'updateprefs') do |f| %>
+            <%= f.hidden_field :orgid, :value => current_user.organization.id %>  
+
+            <%= f.label :name, "Organization Name:" %>
+            <%= f.text_field :name %>
+            <br />
+            <br />        
+            <button type="submit" class="btn btn-success">
+              <i class="icon-check icon-white"></i> Save
+            </button>
+            <% end %>
+          </div>
+
+
+
+          <div class="tab-pane" id="tab2">
+            <h3><p>Change Password</p></h3>
+            <%= form_for :organization, :url => url_for(:controller => 'organizations', 
+                            :action => 'updatepassword') do |f| %>
+            <%= f.hidden_field :orgid, :value => current_user.organization.id %>  
+
+            <%= f.label :password, "New Password" %>
+            <%= f.password_field :password %>
+
+            <%= f.label :password_confirmation, "Confirm New Password" %>
+            <%= f.password_field :password_confirmation %>
+            <br />
+            <br />        
+            <button type="submit" class="btn btn-success">
+              <i class="icon-check icon-white"></i> Save
+            </button>
+            <% end %>
+
+          </div>
+
+
+
+
+        </div>
+      </div>
+
+
+
+
+  	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+Invalid Request.
+<% end %>
+
+
+<% else %>
+<%= render 'shared/no_organization'%>
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

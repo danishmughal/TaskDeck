@@ -46,6 +46,10 @@ Taskdeck::Application.routes.draw do
   match '/completeprojecttask', to: 'project_tasks#completetask'
   match '/updateptaskform', to: 'project_tasks#updateform'
   match '/updateptask', to: 'project_tasks#updatetask'
+  match '/admin', to: 'organizations#admin'
+  match '/updateprefs', to: 'organizations#updateprefs'
+  match '/updatepassword', to: 'organizations#updatepassword'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

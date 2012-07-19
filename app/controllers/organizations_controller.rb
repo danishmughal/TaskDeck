@@ -46,5 +46,34 @@ class OrganizationsController < ApplicationController
 	def orgpanel
 	end
 
+	def admin
+		
+	end
+
+	def updateprefs
+		orgid = params[:organization][:orgid]
+		name = params[:organization][:name]
+
+		org = Organization.find(orgid)
+		oldname = org.full_name
+		org.update_attributes(full_name: name)
+		flash[:success] = "Your organizaton's name has been changed from " + oldname + " to " + org.full_name + "."
+		redirect_to '/admin'
+
+	end
+
+	def updatepassword
+		if params[:organization][:password] == params[:organization][:password_confirmation]
+			org = Organization.find(params[:organization][:orgid])
+			pass = params[:organization][:password]
+			org.update_attributes(password: pass)
+			flash[:success] = "Your organization's password has been successfully changed."
+			redirect_to '/admin'
+		else
+			flash[:error] = "Your passwords did not match. Please try again."
+			redirect_to '/admin'
+		end
+	end
+
 
 end
