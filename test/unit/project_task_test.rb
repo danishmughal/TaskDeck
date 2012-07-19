@@ -1,19 +1,21 @@
 # == Schema Information
 #
-# Table name: task_notes
+# Table name: project_tasks
 #
 #  id               :integer         not null, primary key
-#  task_id          :integer
+#  project_id       :integer
+#  user_id          :integer
+#  name             :string(255)
 #  description      :text
-#  percent_complete :integer
+#  percent_complete :integer         default(0)
+#  completed_at     :datetime
 #  created_at       :datetime        not null
 #  updated_at       :datetime        not null
-#  task_type        :string(255)
 #
 
 require 'test_helper'
 
-class TaskNoteTest < ActiveSupport::TestCase
+class ProjectTaskTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

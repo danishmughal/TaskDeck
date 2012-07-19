@@ -77,7 +77,7 @@ class TasksController < ApplicationController
 		else
 			task.update_attribute(:percent_complete, params[:task][:percent_complete])
 			@tasknote = TaskNote.new(task_id: task.id, description: params[:task][:task_note][:description], 
-					  percent_complete: params[:task][:percent_complete])
+					  percent_complete: params[:task][:percent_complete], task_type: 'task')
 			@tasknote.save!
 			redirect_to '/'
 		end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120712120657) do
+ActiveRecord::Schema.define(:version => 20120716120551) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -46,6 +46,26 @@ ActiveRecord::Schema.define(:version => 20120712120657) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "project_tasks", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "percent_complete", :default => 0
+    t.datetime "completed_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  create_table "projects", :force => true do |t|
+    t.integer  "team_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "completed_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "reminders", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -61,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20120712120657) do
     t.integer  "percent_complete"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.string   "task_type"
   end
 
   create_table "tasks", :force => true do |t|

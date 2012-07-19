@@ -1,0 +1,54 @@
+<% provide(:title, 'Update Task - TaskDeck') %>
+<% @active = 1 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+
+<br />
+
+<div class="row-fluid">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+
+        <%= form_for :task, :url => url_for(:controller => 'project_tasks', 
+                            :action => 'updatetask') do |f| %>
+
+        <%= f.hidden_field :id, :value => @task.id %>
+        
+        Progress (1-100): <br />
+        <%= f.text_field :percent_complete %><%= " %" %>
+        <br />                               
+
+        <%= f.fields_for :task_note do |ff| %>
+            Description: <br />
+            <%= ff.text_area :description %>
+        <% end %>
+        <br />
+        <br />
+        <%= f.submit "Update", class: "btn btn-primary" %>
+        <% end  %>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+<%= render 'shared/no_organization'%>
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

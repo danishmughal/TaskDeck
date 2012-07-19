@@ -8,10 +8,11 @@
 #  percent_complete :integer
 #  created_at       :datetime        not null
 #  updated_at       :datetime        not null
+#  task_type        :string(255)
 #
 
 class TaskNote < ActiveRecord::Base
-  attr_accessible :task_id, :description, :percent_complete
+  attr_accessible :task_id, :description, :percent_complete, :task_type
   belongs_to :task
 
 

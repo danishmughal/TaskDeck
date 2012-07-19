@@ -1,0 +1,157 @@
+<% provide(:title, @project.name + ' - TaskDeck') %>
+<% @active = 2 %>
+
+<% if signed_in? %>
+<% if current_user.team_id == @project.team.id %>
+
+<br />
+
+<div class="row-fluid">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+
+      <div class="page-header">
+        <h2><%= @project.name %></h2>
+      </div>
+
+      <blockquote>
+        <p><%= @project.description %></p>
+      </blockquote>
+
+
+<div class="modal hide fade" id="NewProjectTask">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Create New Project Task</h3>
+  </div>
+  <div class="modal-body">
+      <%= form_for :project_task, :url => url_for(:controller => 'project_tasks', 
+                            :action => 'create') do |f| %>
+          <%= f.label :name, "Task Name:" %>
+          <%= f.text_field :name %>
+
+          <%= f.hidden_field :projectid, :value => @project.id %>                      
+
+          <%= f.label :description, "Description:" %>
+          <%= f.text_area :description %>
+
+          <br />
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn pull-left" data-dismiss="modal">Close</a>
+          <%= f.submit "Create Project Task", class: "btn btn-primary" %>
+      <% end %>
+  </div>
+</div>
+
+
+
+<div class="modal hide fade" id="AssignTask">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Assign Project Tasks</h3>
+  </div>
+  <div class="modal-body">
+      <%= form_for :project_task, :url => url_for(:controller => 'project_tasks', 
+                            :action => 'assigntask') do |f| %>
+
+          <% @projtasks = ProjectTask.where(project_id: @project.id, user_id: nil) %>
+          <% @teammembers = User.where(team_id: current_user.team_id) %>
+                
+          Task: <br />
+          <%= collection_select(:project_task, :id, @projtasks, :id, :name, options ={:prompt => "-Select a Project Task"}, :class =>"project_task") %><br /><br />
+
+
+          Team Member: <br />
+          <%= collection_select(:user, :id, @teammembers, :id, :name, options ={:prompt => "-Select a Team Member"}, :class =>"user") %>
+
+          <%= f.hidden_field :projectid, :value => @project.id %>                      
+
+          <br />
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn pull-left" data-dismiss="modal">Close</a>
+          <%= f.submit "Assign", class: "btn btn-primary" %>
+      <% end %>
+  </div>
+</div>
+
+
+
+
+      <% project_tasks = ProjectTask.where(project_id: @project.id) %>
+    
+    <br />
+    <br />
+
+    <h3>Tasks:
+
+
+    <% if current_user.team_leader? %>
+        <a class="btn btn-mini pull-right" data-toggle="modal" href="#NewProjectTask" >New Project Task
+        </a>
+        <a class="btn btn-mini pull-right" data-toggle="modal" href="#AssignTask" >Assign Tasks
+        </a>
+
+    <% end %>
+      </h3>
+      <br />
+
+
+      <% if !project_tasks.empty? %>
+        <table class="table table-bordered table-condensed">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Description</th>
+              <th>Progress</th>
+              <th>Assigned To</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          <% project_tasks.each do |p| %>
+          <tr>   
+            <td><%= link_to p.name, p %></td>
+            <td><%= truncate p.description, length: 160 %></td>
+            <td><%= p.percent_complete.to_s + "%" %></td>
+            <td>
+              <% if p.user_id? %>
+                <%= p.user.name %>
+              <% else %>
+                -none-  
+              <% end %>
+            </td> 
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        No tasks created for this project as of yet.
+      <% end %>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+  Error. You do not have permission to view this page.
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

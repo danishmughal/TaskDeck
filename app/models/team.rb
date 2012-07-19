@@ -13,7 +13,7 @@ class Team < ActiveRecord::Base
 	attr_accessible :name, :organization_id
 	belongs_to :organization
 	has_many :users
-
+	has_many :projects
 
 	validates :name, presence: true, length: { maximum: 30 }, uniqueness: true
 	validates :organization_id, presence: true

@@ -13,6 +13,7 @@
 
 
     <div class="span8">
+          <% @pendingtask = Task.count(:conditions => {:approved => false, :user_id => current_user.id}) %>
 
           <ul class="nav nav-tabs">
             <li><a href="/">
@@ -36,11 +37,50 @@
                 Reminders
               </a>
               </li>
+
+              <li><a href="/project_tasks">
+                Project Tasks
+              </a>
+              </li>
+
             </ul>
 
 
 
 
+<div class="modal hide fade" id="NewReminder">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Create New Reminder</h3>
+  </div>
+  <div class="modal-body">
+          <%= form_for :reminder, :url => url_for(:controller => 'reminders', 
+                            :action => 'create') do |f| %>
+
+          <%= f.label :name, "Reminder Name:" %>
+          <%= f.text_field :name %>
+
+          <%= f.label :description, "Description" %>
+          <%= f.text_area :description %>
+          <br />
+          <br />
+
+          Select Reminder Time:
+          <br />
+        <%= datetime_picker_input "reminder","reminder_at", :dateFormat => "yy-mm-dd", :ampm => "true" %>
+          <br />
+          <br />
+
+
+          <br />
+
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn pull-left" data-dismiss="modal">Close</a>
+          <%= f.submit "Set Reminder", class: "btn btn-success" %>
+      <% end %>     
+  </div>
+</div>
 
 
 
@@ -53,7 +93,7 @@
 
 <% if !upcomingreminders.empty? %>
 <h3>Upcoming Reminders: 
-  <a button class="btn pull-right" href="/reminders/new">Add a Reminder</button></a></h3>
+  <a class="btn pull-right" data-toggle="modal" href="#NewReminder" >Add a Reminder</a></h3>
 <br />
 
 <table class="table table-bordered table-striped">
@@ -102,7 +142,7 @@
 <% if !reminders.empty? %>
 <% if upcomingreminders.empty? %>
 <h3>Past Reminders: 
-  <a button class="btn pull-right" href="/reminders/new">Add a Reminder</button></a></h3>
+  <a class="btn pull-right" data-toggle="modal" href="#NewReminder" >Add a Reminder</a></h3>
 <br />
 <% else %>
 <h3>Past Reminders: </h3>

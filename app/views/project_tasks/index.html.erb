@@ -1,8 +1,22 @@
-          <% @pendingtask = Task.count(:conditions => {:approved => false, :user_id => current_user.id}) %>
-          
+<% provide(:title, 'Project Tasks - TaskDeck') %>
+<% @active = 1 %>
+
+<% if signed_in? %>
+<% if current_user.organization_id? %>
+
+<br />
+
+<div class="row-fluid">
+    <aside class="span4">
+      <%= render 'shared/side_menu' %>
+    </aside>
+
+
+    <div class="span8">
+        <% @pendingtask = Task.count(:conditions => {:approved => false, :user_id => current_user.id}) %>
 
           <ul class="nav nav-tabs">
-            <li class="active"><a href="/">
+            <li><a href="/">
               TaskDeck
               </a>
             </li>
@@ -23,51 +37,18 @@
                 Reminders
               </a>
               </li>
-              <li><a href="/project_tasks">
+              <li class="active"><a href="/project_tasks">
                 Project Tasks
               </a>
               </li>
             </ul>
 
+<% tasks = ProjectTask.where(user_id: current_user.id).order("project_id DESC") %>
 
-
-<div class="modal hide fade" id="NewTask">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    <h3>Create New Task</h3>
-  </div>
-  <div class="modal-body">
-      <%= form_for :task, :url => url_for(:controller => 'tasks', 
-                            :action => 'create') do |f| %>
-          <%= f.label :name, "Task Name:" %>
-          <%= f.text_field :name %>
-
-          <%= f.label :description, "Description (As detailed as possible):" %>
-          <%= f.text_area :description %>
-
-          <br />
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn pull-left" data-dismiss="modal">Close</a>
-          <%= f.submit "Create Task", class: "btn btn-primary" %>
-      <% end %>
-  </div>
-</div>
-
-
-
-<% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: (0..99)).order("updated_at DESC") %>
-
-<h3>Active Tasks: 
-  <% if current_user.team_id? %>
-  <a class="btn pull-right" data-toggle="modal" href="#NewTask" >Create New Task</a></h3>
-  <% else %>
-  <a button class="btn pull-right" disabled="true">Create New Task</button></a></h3>
-  You must join or create a team in order to create tasks for yourself.
-  <% end %>
+<h3>Project Tasks: </h3>
 <br />
 <% if tasks.empty? %>
-No active tasks currently.
+No project tasks currently. It is your team leader's responsibility to assign you these tasks.
 
 <% else %>
 <table class="table table-bordered table-striped">
@@ -75,7 +56,8 @@ No active tasks currently.
     <tr>
       <th>Task</th>
       <th>Description</th>
-      <th></th>
+      <th>Project</th>
+      <th>Update</th>
     </tr>
   </thead>
   <tbody>
@@ -102,11 +84,12 @@ No active tasks currently.
         <%= truncate t.description, length: 160 %>
         <div class="pull-right"><%= link_to 'More ->', t %></div>
       </td>
-      <td>
+      <td><%= link_to t.project.name, t.project %></td>
+      <td>        
         <center>
 
         <% if t.percent_complete < 100 %>
-        <%= form_for :task, :url => url_for(:controller => 'tasks', 
+        <%= form_for :task, :url => url_for(:controller => 'project_tasks', 
                             :action => 'completetask') do |f| %>
         <%= f.hidden_field :id, :value => t.id %>                      
         <button type="submit" class="btn btn-success">
@@ -115,15 +98,16 @@ No active tasks currently.
         <% end %>
         <% end %>
         
-        <%= form_for :task, :url => url_for(:controller => 'tasks', 
+        <%= form_for :task, :url => url_for(:controller => 'project_tasks', 
                             :action => 'updateform') do |f| %>
         <%= f.hidden_field :id, :value => t.id %>                      
         <%= f.submit "Update", class: "btn btn-mini" %>
         <% end %>
 
         </center>
-  </td>
+      </td>
       <% end %>
+
     </tr>
   </tbody>
 </table>
@@ -135,4 +119,23 @@ No active tasks currently.
 <br />
 
 
+    </div>
+</div>
 
+
+
+
+
+
+
+
+
+<!-- End of main page. These partials render the page for users who are not logged or do not have an organization -->
+
+<% else %>
+<%= render 'shared/no_organization'%>
+<% end %>
+
+<% else %>
+<%= render 'shared/not_signed_in' %>
+<% end %>

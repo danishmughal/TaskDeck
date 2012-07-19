@@ -1,8 +1,8 @@
-<% provide(:title, @task.name + ' - TaskDeck') %>
-<% @active = 1 %>
+<% provide(:title, @project_task.name + ' - TaskDeck') %>
+<% @active = 2 %>
 
 <% if signed_in? %>
-<% if current_user.organization_id == @task.user.organization_id %>
+<% if current_user.organization_id == @project_task.project.team.organization_id %>
 
 <br />
 
@@ -14,44 +14,39 @@
 
     <div class="span8">
 
-      <h2><%= @task.name %> 
-        <% if current_user == @task.user %>
-          <div class="pull-right">
-          <%= form_for :task, :url => url_for(:controller => 'tasks', 
-                              :action => 'updateform') do |f| %>
-          <%= f.hidden_field :id, :value => @task.id %>                      
-          <%= f.submit "Update", class: "btn btn-mini" %>
-          <% end %>
-          </div>
-        <% end %>
-
-
+      <h2><%= @project_task.name %> 
       </h2>
 
-      <strong>Owner: <%= link_to @task.user.name, @task.user %></strong><br />
-      <strong>Created: <%= time_ago_in_words(@task.created_at) + " ago."%></strong><%= "  (" + @task.created_at.to_s + ")" %><br />
-      <strong>Status: <%= @task.percent_complete.to_s() + "% complete." %></strong>
+      <strong>Part of Project: <%= link_to @project_task.project.name, @project_task.project %></strong><br />
+      <strong>Assigned to: </strong>
+        <% if @project_task.user_id? %>
+        <%= link_to @project_task.user.name, @project_task.user %><br />
+        <% else %>
+        Nobody.<br />
+        <% end %>
+      <strong>Created: <%= time_ago_in_words(@project_task.created_at) + " ago."%></strong><%= "  (" + @project_task.created_at.to_s + ")" %><br />
+      <strong>Status: <%= @project_task.percent_complete.to_s() + "% complete." %></strong>
 
 
-          <% if @task.percent_complete < 25 %> 
+          <% if @project_task.percent_complete < 25 %> 
             <div class="progress progress-danger progress-striped" >
-          <% elsif @task.percent_complete < 50 %>
+          <% elsif @project_task.percent_complete < 50 %>
             <div class="progress progress-warning progress-striped" >
-          <% elsif @task.percent_complete < 100 %>
+          <% elsif @project_task.percent_complete < 100 %>
             <div class="progress progress-striped" >
-          <% elsif @task.percent_complete = 100 %>
+          <% elsif @project_task.percent_complete = 100 %>
             <div class="progress progress-striped progress-success" >
           <% end %>
 
             <div class="bar"
-                 style=<%= "width:#{@task.percent_complete}%;" %> >
+                 style=<%= "width:#{@project_task.percent_complete}%;" %> >
             </div>
           </div> 
 
-      <p><strong>Description:</strong><%= @task.description %></p>
+      <p><strong>Description:</strong><%= @project_task.description %></p>
 
       <strong>Changelog: </strong>
-    <% tasknotes = TaskNote.where(task_id: @task.id, task_type: 'task').order("created_at DESC") %>
+    <% tasknotes = TaskNote.where(task_id: @project_task.id, task_type: 'project_task').order("created_at DESC") %>
 
     <% if tasknotes.empty? %>
       No recorded changes or notes.

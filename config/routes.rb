@@ -7,6 +7,8 @@ Taskdeck::Application.routes.draw do
   resources :tasks
   resources :task_notes
   resources :reminders
+  resources :projects
+  resources :project_tasks
 
   root to: 'static_pages#home'
 
@@ -40,6 +42,10 @@ Taskdeck::Application.routes.draw do
   match '/settings', to: 'users#edit'
   match '/assigntask', to: 'tasks#assigntaskform'
   match '/assigntask2', to: 'tasks#assigntask'
+  match '/assignprojectask', to: 'project_tasks#assigntask'  
+  match '/completeprojecttask', to: 'project_tasks#completetask'
+  match '/updateptaskform', to: 'project_tasks#updateform'
+  match '/updateptask', to: 'project_tasks#updatetask'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

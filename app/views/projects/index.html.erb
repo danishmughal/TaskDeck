@@ -1,4 +1,4 @@
-<% provide(:title, 'Team Member Tasks - TaskDeck') %>
+<% provide(:title, 'Team Projects - TaskDeck') %>
 <% @active = 2 %>
 
 <% if signed_in? %>
@@ -39,6 +39,9 @@
 						<% end %>
 						<% end %>
 
+
+
+
 					    <li><a href="/team_management">
 					    	Team Management 
 					    	<% if @pendinguser != 0 %>
@@ -48,8 +51,7 @@
 					    	<% end %>
 					    	</a>
 					    </li>
-
-					    <li class="active"><a href="/member_tasks">
+					    <li><a href="/member_tasks">
 					    	Member Tasks
 					    	<% if @pendingtask != 0 %>
 					    	<span class="badge badge-info">
@@ -64,53 +66,76 @@
                         </a>
                         </li>
 
+
 					<% end %>
-                        <li><a href="/projects">
+
+                        <li class="active"><a href="/projects">
                             Projects
                         </a>
                         </li>
-					
+
 					  </ul>
 
+<div class="modal hide fade" id="NewProject">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Create New Project</h3>
+  </div>
+  <div class="modal-body">
+      <%= form_for :project, :url => url_for(:controller => 'projects', 
+                            :action => 'create') do |f| %>
+          <%= f.label :name, "Project Name:" %>
+          <%= f.text_field :name %>
 
-						<% tasks = Task.where(approved: false) %>
-						<% if !tasks.empty? %>
-							<h3>Pending Tasks:</h3> 
-							<table class="table">
-							  <thead>
-							    <tr>
-							      <th>Task Name</th>
-							      <th>Description</th>
-							      <th>Member</th>
-							      <th>...</th>
-							    </tr>
-							  </thead>
-							  <tbody>
+          <%= f.label :description, "Brief Project Description:" %>
+          <%= f.text_area :description %>
 
-							<% tasks.each do |t| %>
-								<% if t.user.team_id == current_user.team_id %>
-								  <tr>   
-								  	<td><%= t.name %></td>
-								  	<td><%= t.description %></td>
-								  	<td><%= t.user.name %></td>
-									<td><button class="btn btn-success btn-mini"><%= link_to "Approve", { controller: :tasks, action: "approvetask", :id => t.id }, :method => :post %></button></td>
-									
-									<td><button class="btn btn-error btn-mini"><%= link_to "Reject", { controller: :tasks, action: "rejecttask", :id => t.id }, :method => :post %></button></td>
-
-								  </tr>
-								<% end %>
-							<% end %>
-
-							  </tbody>
-							</table>
-
-						<% else %>
-						No pending tasks at this time.	
-
-						<% end %>
+          <br />
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn pull-left" data-dismiss="modal">Close</a>
+          <%= f.submit "Create Project", class: "btn btn-primary" %>
+      <% end %>
+  </div>
+</div>
 
 
-				 	</div>
+
+		<% projects = Project.where(team_id: current_user.team_id) %>
+
+		<h3>Projects:
+
+
+		<% if current_user.team_leader? %>
+  			<a class="btn pull-right" data-toggle="modal" href="#NewProject" >New Project</a>
+  		</h3>
+  		<% end %>
+
+
+		<% if !projects.empty? %>
+			<table class="table">
+			  <thead>
+			    <tr>
+			      <th>Name</th>
+			      <th>Progress</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+
+			  <% projects.each do |p| %>
+			  <tr>   
+			  	<td><%= link_to p.name, p %></td>
+			  	<td>...</td>
+			  </tr>
+			  <% end %>
+			  </tbody>
+			</table>
+		<% else %>
+			Your team has not started working on any projects yet.
+		<% end %>
+
+
+	</div>
 		<% end %>
     </div>
 </div>

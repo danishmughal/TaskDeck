@@ -79,7 +79,8 @@
 
 
           <li>
-            <a href="/"><i class="icon-ok-sign icon-white"></i><%= " " + current_user.name %></a>
+            <a href=<%= "/users/" + current_user.id.to_s %>>
+              <i class="icon-ok-sign icon-white"></i><%= " " + current_user.name %></a>
           </li>
         </ul>
 
