@@ -33,6 +33,8 @@ GEM
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
     bootstrap-sass (2.0.3)
+    bootstrap-will_paginate (0.0.6)
+      will_paginate
     builder (3.0.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -112,6 +114,7 @@ GEM
     uglifier (1.2.6)
       execjs (>= 0.3.0)
       multi_json (~> 1.3)
+    will_paginate (3.0.3)
 
 PLATFORMS
   ruby
@@ -121,6 +124,7 @@ DEPENDENCIES
   annotate (~> 2.4.1.beta)
   bcrypt-ruby (= 3.0.1)
   bootstrap-sass (= 2.0.3)
+  bootstrap-will_paginate
   coffee-rails (~> 3.2.1)
   daemons
   delayed_job_active_record
@@ -131,3 +135,4 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sqlite3
   uglifier (>= 1.0.3)
+  will_paginate

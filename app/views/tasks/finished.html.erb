@@ -44,9 +44,11 @@
 
             </ul>
 
-    <% tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: 100).order("updated_at DESC") %>
 
-    <% if tasks.empty? %>
+    <% @tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: 100).order("updated_at DESC") %>
+
+
+    <% if @tasks.empty? %>
       No complete tasks.
     <% else %>
     <h3>Completed Tasks: </h3><br />
@@ -59,7 +61,7 @@
         </tr>
       </thead>
       <tbody>
-        <% tasks.each do |t| %>
+        <% @tasks.each do |t| %>
         <tr>
           <td><%= link_to t.name,t %></td>
           <td><%= truncate t.description, length: 160 %>
@@ -83,7 +85,6 @@
     </table>
 
     <% end %>
-
 
 
     </div>

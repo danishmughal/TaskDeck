@@ -14,7 +14,7 @@
 #
 
 class ProjectTask < ActiveRecord::Base
-  attr_accessible :project_id, :user_id, :name, :description, :percent_complete
+  attr_accessible :project_id, :user_id, :name, :description, :percent_complete, :completed_at
   belongs_to :project
   belongs_to :user
 

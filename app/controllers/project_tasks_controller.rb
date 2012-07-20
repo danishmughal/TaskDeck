@@ -35,6 +35,13 @@ class ProjectTasksController < ApplicationController
 		user = User.find(team_member_id)
 		project_task = ProjectTask.find(project_task_id)
 		project_task.update_attributes(user_id: user.id)
+
+		@notification = Notification.new(user_id: user.id, 
+								 description: current_user.name + " has assigned you a task in the project '" + project_task.project.name + ".'",
+								 target: "/project_tasks/" + project_task_id,
+								 seen: false)
+		@notification.save!
+
 		flash[:success] = "You have assigned the project task '" + project_task.name + "' to " + user.name + "."
 		redirect_to '/projects/' + params[:project_task][:projectid]
 	end
@@ -49,6 +56,8 @@ class ProjectTasksController < ApplicationController
 	def completetask
 		task = ProjectTask.find(params[:task][:id])
 		task.update_attribute(:percent_complete, 100)
+		
+
 		redirect_to '/project_tasks'
 	end
 
@@ -67,7 +76,7 @@ class ProjectTasksController < ApplicationController
 			@tasknote = TaskNote.new(task_id: task.id, description: params[:task][:task_note][:description], 
 					  percent_complete: params[:task][:percent_complete], task_type: 'project_task')
 			@tasknote.save!
-			redirect_to '/'
+			redirect_to '/project_tasks'
 		end
 
 	end
