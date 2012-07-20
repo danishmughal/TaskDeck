@@ -1,5 +1,6 @@
+    <div class="well">
+
       <section>
-        <%= gravatar_for current_user, size: 100 %>
         <h3><%= current_user.name %></h3> 
         <strong>
           <%= current_user.email %><br />
@@ -11,26 +12,12 @@
       </section>
       <br />
       <br />
-      <section>
-        <div class="stats">
-          <a href="/">
-            <strong id="tasksassigned" class="stat">
-            </strong>
-            Tasks Currently Assigned
-          </a>
-          <a href="/finished">
-            <strong id="taskscompleted" class="stat">
-            </strong>
-            Tasks Completed
-          </a>
-        </div>
-      </section>
-
 
 
       <section>
         <ul class="nav nav-list">
           <li class="nav-header">
+            Menu
           </li>
           <% if @active == 1 %>
           <li class="active">
@@ -96,3 +83,4 @@
           <% end %>
         </ul>
       </section>
+</div>

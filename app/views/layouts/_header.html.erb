@@ -80,14 +80,12 @@
 
           <li>
             <a href=<%= "/users/" + current_user.id.to_s %>>
-              <i class="icon-ok-sign icon-white"></i><%= " " + current_user.name %></a>
+              <%= gravatar_for current_user, size: 20 %><%= current_user.name %></a>
           </li>
         </ul>
 
       <% else %>
-        <div class="btn-group pull-right">
-		      <a button class="btn" href="/signin">Sign in</button></a>
-        </div>
+		      <a class="btn pull-right" data-toggle="modal" href="#Signin" >Sign in</a>
 
       <% end %>
 

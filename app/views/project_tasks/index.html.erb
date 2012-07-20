@@ -7,12 +7,12 @@
 <br />
 
 <div class="row-fluid">
-    <aside class="span4">
+    <aside class="span3">
       <%= render 'shared/side_menu' %>
     </aside>
 
 
-    <div class="span8">
+    <div class="span9">
         <% @pendingtask = Task.count(:conditions => {:approved => false, :user_id => current_user.id}) %>
 
           <ul class="nav nav-tabs">
