@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(params[:user])
 		if @user.save
-      		UserMailer.delay.registration_confirmation(@user)
+      		UserMailer.registration_confirmation(@user).deliver
 			sign_in @user
 			flash[:success] = "Your account has been created. Welcome to TaskDeck!"
 			redirect_to '/'
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 		if current_user.team_id.nil?
 			teamid = params[:user][:id]
 			@teamleader = User.find(:first, :conditions => ["team_id = ? and team_leader = ?", teamid, true])
-			UserMailer.delay.team_requested(current_user, @teamleader)
+			UserMailer.team_requested(current_user, @teamleader).deliver
 			@notification = Notification.new(user_id: @teamleader.id, 
 								 description: current_user.name + " has requested to join your team.",
 								 target: "/team_management",
