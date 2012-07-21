@@ -50,6 +50,9 @@ Taskdeck::Application.routes.draw do
   match '/updateprefs', to: 'organizations#updateprefs'
   match '/updatepassword', to: 'organizations#updatepassword'
 
+  match '/updateproject', to: 'projects#updateproject'
+  match '/resetorgpassword', to: 'organizations#resetpassword'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

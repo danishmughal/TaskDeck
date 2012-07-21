@@ -7,8 +7,6 @@ class UserMailer < ActionMailer::Base
   end
 
 
-
-
   def team_requested(user, teamleader)
   	@user = user
   	@teamleader = teamleader
@@ -61,6 +59,11 @@ class UserMailer < ActionMailer::Base
     mail(:to => reminder.user.email, :subject => "Reminder for " + reminder.name)
   end
     
-  
+  def reset_password(admin, newpassword)
+    @admin = admin
+    @newpassword = newpassword
+    mail(:to => admin.email, :subject => "Your Organization Password has been reset")
+    
+  end
 
 end

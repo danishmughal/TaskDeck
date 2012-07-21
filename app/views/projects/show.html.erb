@@ -16,11 +16,51 @@
 
       <div class="page-header">
         <h2><%= @project.name %></h2>
+        <% if current_user.team_leader? || current_user.admin? %>
+        <a class="btn btn-mini pull-right" data-toggle="modal" href="#EditProject">Edit
+        </a>
+        <br />
+        <% end %>
       </div>
 
       <blockquote>
         <p><%= @project.description %></p>
       </blockquote>
+
+<br />
+<br />
+
+
+<div class="modal hide fade" id="EditProject">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Edit this project</h3>
+  </div>
+  <div class="modal-body">
+        <%= form_for :project, :url => url_for(:controller => 'projects', 
+                            :action => 'updateproject') do |f| %>
+
+        <%= f.hidden_field :id, :value => @project.id %>
+        
+        Project Name: <br />
+        <%= f.text_field :name %>
+        <br />                               
+
+        Description: <br />
+        <%= f.text_area :description %>
+
+        <br />
+        <br />
+
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn pull-left" data-dismiss="modal">Close</a>
+    <%= f.submit "Update", class: "btn btn-primary" %>
+    <% end  %>
+
+  </div>
+</div>
+
 
 
 <div class="modal hide fade" id="NewProjectTask">

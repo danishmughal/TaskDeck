@@ -28,4 +28,16 @@ class ProjectsController < ApplicationController
 		@project = Project.find(params[:id])
 	end
 
+	def updateproject
+		projectid = params[:project][:id]
+		projectname = params[:project][:name]
+		desc = params[:project][:description]
+
+		proj = Project.find(projectid)
+
+		proj.update_attributes(name: projectname, description: desc)
+
+		redirect_to '/projects/' + projectid
+		
+	end
 end

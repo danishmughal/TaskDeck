@@ -18,7 +18,7 @@ class Organization < ActiveRecord::Base
 
 
 	validates :full_name, presence: true, length: { maximum: 30 }
-	validates :password, presence: true, length: { minimum: 6 }
+	validates :password, presence: true
 	validates :username, presence: true, uniqueness: true
 
 	

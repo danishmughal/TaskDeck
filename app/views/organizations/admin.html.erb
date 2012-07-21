@@ -44,12 +44,16 @@
 
 
           <div class="tab-pane" id="tab2">
-            <h3><p>Change Password</p></h3>
+            <h3><p>Change Organization Password</p></h3>
             <%= form_for :organization, :url => url_for(:controller => 'organizations', 
                             :action => 'updatepassword') do |f| %>
             <%= f.hidden_field :orgid, :value => current_user.organization.id %>  
 
-            <%= f.label :password, "New Password" %>
+            <%= f.label :previous_password, "Previous Password" %>
+            <%= f.password_field :previous_password %>
+
+
+            <%= f.label :password, "New Organization Password" %>
             <%= f.password_field :password %>
 
             <%= f.label :password_confirmation, "Confirm New Password" %>
@@ -60,6 +64,9 @@
               <i class="icon-check icon-white"></i> Save
             </button>
             <% end %>
+            <br />
+            <br />
+            Forgot your Organization Password? Click <%= link_to "here", { controller: :organizations, action: "resetpassword", :id => current_user.organization.id },  :confirm => "Are you sure? Your password will be reset and sent to you via email.", :method => :post %>
 
           </div>
 
