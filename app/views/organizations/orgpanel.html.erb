@@ -74,7 +74,7 @@
 			  	<td><%= t.name %></td>
 			  	<% if current_user.team_id.nil? %>
 			  	<% @tt = t %>
-				<td><button class="btn btn-mini"><%= link_to "Join", { controller: :users, action: "jointeam", :id => @tt.id },	:confirm => "Are you sure? You will not be able to join another team unless the team leader removes you from the team.", :method => :post %></button></td>
+				<td><button class="btn btn-mini"><%= link_to "Join", { controller: :users, action: "jointeam", :id => @tt.id },	:confirm => "Are you sure? You will not be able to join another team until the team leader removes you from the team.", :method => :post %></button></td>
 
 			    <% else %>
 			    <td><button class="btn btn-mini disabled">Join</button></td>

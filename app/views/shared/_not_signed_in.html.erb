@@ -16,6 +16,7 @@
       <br />
 
     <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+    <p><a data-toggle="modal" href="#ForgotPassword" >Forgot your password?</a></p>
   </div>
   <div class="modal-footer">
     <a href="#" class="btn pull-left" data-dismiss="modal">Close</a>
@@ -24,6 +25,33 @@
 
   </div>
 </div>
+
+
+<div class="modal hide fade" id="ForgotPassword">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Reset Password</h3>
+  </div>
+  <div class="modal-body">
+      <%= form_for :user, :url => url_for(:controller => 'users', 
+                            :action => 'forgotpassword') do |f| %>
+
+      <%= f.label :email, "Enter the email address of your TaskDeck account:" %>
+      <%= f.text_field :email %>
+
+
+      <br />
+      <p>Password reset instructions will be sent to you via email.</p>
+
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn pull-left" data-dismiss="modal">Close</a>
+      <%= f.submit "Reset Password", class: "btn btn-large btn-primary" %>
+    <% end %>
+
+  </div>
+</div>
+
 
 
 

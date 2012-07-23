@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
 	def jointeam
 		if current_user.team_id.nil?
-			teamid = params[:user][:id]
+			teamid = params[:id]
 			@teamleader = User.find(:first, :conditions => ["team_id = ? and team_leader = ?", teamid, true])
 			UserMailer.team_requested(current_user, @teamleader).deliver
 			@notification = Notification.new(user_id: @teamleader.id, 
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 								 target: "/team_management",
 								 seen: false)
 			@notification.save!
-			current_user.update_attribute(:team_id, params[:user][:id])
+			current_user.update_attribute(:team_id, params[:id])
 			current_user.update_attribute(:team_pending, true)
 			sign_in current_user
 			flash[:success] = "You have submitted your request to join the team. You will officially become 
@@ -104,6 +104,26 @@ class UsersController < ApplicationController
 	end
 
 
+	def resetpassword
+		@new_password = (0...8).map{65.+(rand(25)).chr}.join
+		user = current_user
+		user.update_attributes(password: @new_password, password_confirmation: @new_password)
+		UserMailer.reset_user_password(user, @new_password).deliver
+		flash[:success] = "Your password reset instructions have been sent to your email."
+		redirect_to '/settings'
+
+	end
+
+
+	def forgotpassword
+		@new_password = (0...8).map{65.+(rand(25)).chr}.join
+		@email = params[:user][:email]
+		user = User.find_by_email(@email)
+		user.update_attributes(password: @new_password, password_confirmation: @new_password)
+		UserMailer.reset_user_password(user, @new_password).deliver
+		flash[:success] = "You have been sent an email with instructions on how to access your account."
+		redirect_to '/'
+	end
 
 
 

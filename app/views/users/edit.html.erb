@@ -41,6 +41,9 @@
 
 <p>If you wish to change your profile picture, you must change it from <a href="http://www.gravatar.com">Gravatar.</a></p>
 
+<p>Forgot your Password? Click <%= link_to "here", { controller: :users, action: "resetpassword", :id => current_user.id },  :confirm => "Are you sure? Your password will be reset and sent to you via email.", :method => :post %> to reset.
+</p>
+
 	</div>
 </div>
 

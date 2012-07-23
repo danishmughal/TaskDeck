@@ -66,4 +66,11 @@ class UserMailer < ActionMailer::Base
     
   end
 
+  def reset_user_password(user, newpassword)
+    @user = user
+    @newpassword = newpassword
+    mail(:to => user.email, :subject => "Your password has been reset")
+  end
+
+
 end
