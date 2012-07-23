@@ -99,7 +99,7 @@ This is the team management page. Here you may carry out administrative tasks re
 							</table>
 						<% end %>
 
-						<% members = User.where(team_id: current_user.team_id, team_pending: false) %>
+						<% members = User.where(team_id: current_user.team_id, team_pending: false).order("name ASC").paginate(:page => params[:page], :per_page => 10) %>
 						<% if !members.empty? %>
 							<h3>Team Members:</h3> 
 							<table class="table">
@@ -129,6 +129,7 @@ This is the team management page. Here you may carry out administrative tasks re
 
 							  </tbody>
 							</table>
+							<%= will_paginate members %>
 
 						<% end %>
 

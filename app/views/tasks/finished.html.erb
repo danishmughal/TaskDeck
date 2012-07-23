@@ -45,7 +45,7 @@
             </ul>
 
 
-    <% @tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: 100).order("updated_at DESC") %>
+    <% @tasks = Task.where(user_id: current_user.id, approved: true, percent_complete: 100).order("updated_at DESC").paginate(:page => params[:page], :per_page => 10) %>
 
 
     <% if @tasks.empty? %>
@@ -83,6 +83,7 @@
         </tr>
       </tbody>
     </table>
+    <%= will_paginate @tasks %>
 
     <% end %>
 

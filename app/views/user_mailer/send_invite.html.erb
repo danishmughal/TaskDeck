@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1><%= "You have been invited to join " %><a href="http://taskdeck.heroku.com">TaskDeck!</a></h1>
+
+
+<strong><%= @sender.name %></strong> has invited you to their organization <strong><%= @org.full_name %></strong> on <a href="http://taskdeck.heroku.com">TaskDeck.</a> <br />
+TaskDeck is a simple yet powerful team and task management solution for small to medium-sized companies. By using TaskDeck, you will be ensuring that your business is working as efficiently as possible to achieve maximum success.
+<br />
+<br />
+
+You may accept your invitation to TaskDeck and join <%= @sender.name + "'s" %> organization by clicking on this link <a href="http://taskdeck.heroku.com/signup">here</a> and creating a new account. <br />
+<br />
+After creating your account, join the organization with the following information: <br />
+<strong>Organization Username:</strong> <%= @org.username %> <br />
+<strong>Organization Password:</strong> <%= @org.password %>
+
+<br />
+<br />
+<br />
+
+Brought to you by TaskDeck.
+  </body>
+</html>

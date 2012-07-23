@@ -54,6 +54,7 @@ Taskdeck::Application.routes.draw do
   match '/resetorgpassword', to: 'organizations#resetpassword'
   match '/resetuserpassword', to: 'users#resetpassword'
   match '/forgotpassword', to: 'users#forgotpassword'
+  match '/invite', to: 'users#invite'
 
   match '/about', to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'

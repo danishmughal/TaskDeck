@@ -7,7 +7,7 @@
 <br />
 
 
-<% notifs = Notification.where(user_id: current_user.id).order("created_at DESC") %>
+<% notifs = Notification.where(user_id: current_user.id).order("created_at DESC").paginate(:page => params[:page], :per_page => 15) %>
 <h2>Your Past Notifications:</h3>
 <br />
 <% if notifs.empty? %>
@@ -32,6 +32,8 @@ None.
 
 
 <% end %>
+
+<%= will_paginate notifs %>
 
 <button type="btn btn-success" value="<- Back" onclick="history.back(-1)">
     <i class="icon-arrow-left"></i>

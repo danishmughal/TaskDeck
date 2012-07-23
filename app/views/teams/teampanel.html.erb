@@ -84,7 +84,7 @@
 			  </thead>
 			  <tbody>
 
-			  <% users = User.where(organization_id: current_user.organization_id, team_id: current_user.team_id) %>
+			  <% users = User.where(organization_id: current_user.organization_id, team_id: current_user.team_id).order("name ASC").paginate(:page => params[:page], :per_page => 15) %>
 			  <% users.each do |u| %>
 			  <tr>   
 			  	<td><%= gravatar_for u, size: 30 %> <%= link_to u.name, u %></td>
@@ -93,6 +93,7 @@
 			  <% end %>
 			  </tbody>
 			</table>
+			<%= will_paginate users %>
 
 
 

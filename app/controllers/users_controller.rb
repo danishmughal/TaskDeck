@@ -126,6 +126,14 @@ class UsersController < ApplicationController
 	end
 
 
+	def invite
+		email = params[:user][:email]
+		org = current_user.organization
+		UserMailer.send_invite(email, current_user, org).deliver
+		flash[:success] = "Your invitation has been sent to " + email
+		redirect_to '/orgpanel'
+	end
+
 
 
 

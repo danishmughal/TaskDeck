@@ -15,49 +15,44 @@
 
     <div class="span9">
     	
+
+
+<div class="modal hide fade" id="Invite">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Invite Member</h3>
+  </div>
+  <div class="modal-body">
+  	<p>If you wish to invite someone to your organization on TaskDeck, type their email address in the field below and hit "Invite." They will be sent an email with instructions on setting up an account and joining your organization. They will also be provided with the password of your organization in order to join it.
+  	</p>
+  	<br />
+  	<br />
+  	
+      <%= form_for :user, :url => url_for(:controller => 'users', 
+                            :action => 'invite') do |f| %>
+
+          <%= f.label :email, "Email Address:" %>
+          <%= f.text_field :email %>
+
+          <br />
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn pull-left" data-dismiss="modal">Close</a>
+          <%= f.submit "Invite", class: "btn btn-primary" %>
+      <% end %>
+  </div>
+</div>
+
+
+
+
+
     	<h2><%= @orgname %> - Organization Panel</h2>
+    	<a class="btn pull-right btn-mini" data-toggle="modal" href="#Invite" >Invite</a>
     	<br />
     	<br />
 		
-
-		<h3>Members:</h3>
-			<table class="table">
-			  <thead>
-			    <tr>
-			      <th>Name</th>
-			      <th>Email</th>
-			      <th>Team</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-
-			  <% users = User.where(organization_id: current_user.organization_id) %>
-			  <% users.each do |u| %>
-			  <tr>   
-			  	<td><%= gravatar_for u, size: 25 %> <%= link_to u.name, u %></td>
-			  	<td><%= u.email %></td>
-			  	<% if u.team_id? %>
-			  	<td><%= u.team.name %>
-			  		<% if u.team_pending %>
-			  		(Pending)
-			  		<% end %>
-			  	</td>
-			  	<% else %>
-			  	<td>...</td>
-			  	<% end %>
-			  </tr>
-			  <% end %>
-
-			  </tbody>
-			</table>
-
-
-
-		<br />
-		<br />
-		<br />
-
-		<% team = Team.where(organization_id: current_user.organization_id) %>
+		<% team = Team.where(organization_id: current_user.organization_id).order("name ASC") %>
 		<% if !team.empty? %>
 		<h3>Teams:</h3>
 			<table class="table">
@@ -85,6 +80,45 @@
 			  </tbody>
 			</table>
 		<% end %>
+		
+		<br />
+		<br />
+		<br />
+
+		<h3>Members:</h3>
+			<table class="table">
+			  <thead>
+			    <tr>
+			      <th>Name</th>
+			      <th>Email</th>
+			      <th>Team</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+
+			  <% users = User.where(organization_id: current_user.organization_id).order("name ASC").paginate(:page => params[:page], :per_page => 10) %>
+			  <% users.each do |u| %>
+			  <tr>   
+			  	<td><%= gravatar_for u, size: 25 %> <%= link_to u.name, u %></td>
+			  	<td><%= u.email %></td>
+			  	<% if u.team_id? %>
+			  	<td><%= u.team.name %>
+			  		<% if u.team_pending %>
+			  		(Pending)
+			  		<% end %>
+			  	</td>
+			  	<% else %>
+			  	<td>...</td>
+			  	<% end %>
+			  </tr>
+			  <% end %>
+
+			  </tbody>
+			</table>
+			<%= will_paginate users %>
+
+
+
 
 
 

@@ -73,4 +73,11 @@ class UserMailer < ActionMailer::Base
   end
 
 
+  def send_invite(email, sender, org)
+    @email = email
+    @sender = sender
+    @org = org
+    mail(:to => email, :subject => @sender.name + " has invited you to join TaskDeck!")
+  end
+
 end
